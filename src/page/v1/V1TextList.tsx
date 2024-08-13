@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { V1TextValues } from "./useV1Text";
 import { FaPenToSquare } from "react-icons/fa6";
 import V1TextDelDialog from "./V1TextDelDialog";
 import { Link } from "react-router-dom";
+import { V1TextData } from "./useV1Text";
 
-export default function V1TextList({ item }: { item: V1TextValues }) {
+export default function V1TextList({ item }: { item: V1TextData }) {
   return (
     <div className="group relative border rounded-xl p-4">
       <div>{item.name}</div>

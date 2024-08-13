@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 export default function App() {
   return (
     <div>
-      App
+      App {import.meta.env.MODE}
       <Outlet />
       <Toaster richColors position="top-center" />
     </div>
