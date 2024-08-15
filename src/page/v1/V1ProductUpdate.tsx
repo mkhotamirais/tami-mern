@@ -66,7 +66,7 @@ export default function V1ProductUpdate() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input disabled={pending} {...field} placeholder="Product name" />
+                  <Input disabled={pending} {...field} placeholder="Product name" onFocus={(e) => e.target.select()} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -85,6 +85,7 @@ export default function V1ProductUpdate() {
                     placeholder="Product price"
                     type="number"
                     onChange={(e) => field.onChange(Number(e.target.value))}
+                    onFocus={(e) => e.target.select()}
                   />
                 </FormControl>
                 <FormMessage />

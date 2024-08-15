@@ -18,11 +18,17 @@ const navVer2 = [
 export default function Navbar({ className }: { className?: string }) {
   const [nav, setNav] = useState<{ href: string; label: string }[]>([]);
   const { pathname } = useLocation();
-  const { nav: navBtn } = useBasic();
+  const { nav: navBtn, closeNav } = useBasic();
 
   const path1: string = pathname.split("/")[1];
   let path2: string = pathname.split("/")[2];
   if (!path2) path2 = "v1 home";
+
+  const onNavClick = () => {
+    if (nav) {
+      closeNav();
+    }
+  };
 
   useEffect(() => {
     if (path1 == "v1") {
@@ -41,6 +47,7 @@ export default function Navbar({ className }: { className?: string }) {
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
         {nav.map((item, i) => (
           <Link
+            onClick={onNavClick}
             key={i}
             to={item.href}
             className={`${
