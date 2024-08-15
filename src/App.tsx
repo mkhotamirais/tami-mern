@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Header } from "./components/Header";
 import Footer from "./components/Footer";
@@ -14,6 +14,8 @@ export default function App() {
         </Container>
       </main>
       <Footer />
+
+      <ScrollRestoration />
       <Toaster richColors position="top-center" />
     </div>
   );

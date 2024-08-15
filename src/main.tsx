@@ -10,10 +10,11 @@ import V2 from "./page/v2/V2.tsx";
 import V1Product from "./page/v1/V1Product.tsx";
 import V1ProductCreate from "./page/v1/V1ProductCreate.tsx";
 import V1ProductUpdate from "./page/v1/V1ProductUpdate.tsx";
+import ErrorBoundary from "./ErrorBoundary.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
+    <Route path="/" element={<App />} errorElement={<ErrorBoundary />}>
       <Route index element={<Home />} />
       <Route path="v1">
         <Route index element={<V1 />} />
