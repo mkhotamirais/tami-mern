@@ -2,7 +2,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { ProductSchema } from "./v1Schemas";
 import { Input } from "@/components/ui/input";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -10,10 +9,11 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { url } from "@/lib/constants";
 import { useNavigate } from "react-router-dom";
+import { ProductSchema } from "../v2Schemas";
 
 type CreateProductForm = z.infer<typeof ProductSchema>;
 
-export default function V1ProductCreate() {
+export default function V2ProductCreate() {
   const [pending, startTransition] = useTransition();
   const form = useForm<CreateProductForm>({
     resolver: zodResolver(ProductSchema),
@@ -24,10 +24,11 @@ export default function V1ProductCreate() {
   const onSubmit = async (values: CreateProductForm) => {
     startTransition(() => {
       axios
-        .post(`${url}/v1/product`, values)
+        .create({ withCredentials: true })
+        .post(`${url}/v2/product`, values)
         .then((res) => {
           toast.success(res.data.message);
-          navigate("/v1/product");
+          navigate("/v2/product");
         })
         .catch((err) => {
           toast.error(err.response.data.error || err.message);
@@ -58,7 +59,7 @@ export default function V1ProductCreate() {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Price</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input
                     disabled={pending}

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Container } from "./Wrapper";
 import { VersionsBtn } from "./VersionsBtn";
 import Navbar, { NavBtn } from "./Navbar";
+import AuthBtn from "./AuthBtn";
 
 export function Header() {
   return (
@@ -13,8 +14,11 @@ export function Header() {
             <VersionsBtn className="block sm:hidden" />
             <Navbar />
           </div>
-          <NavBtn />
-          <VersionsBtn className="hidden sm:block" />
+          <div className="flex space-x-2 items-center">
+            <AuthBtn />
+            <VersionsBtn className="hidden sm:block" />
+            <NavBtn />
+          </div>
         </div>
       </Container>
     </header>

@@ -5,7 +5,7 @@ import { url } from "@/lib/constants";
 export interface V1Products {
   _id: string;
   name: string;
-  price: number;
+  price: string | number;
   createdAt: string;
   updatedAt: string;
 }
@@ -26,6 +26,7 @@ export const useV1 = create<V1State>((set) => ({
   loadData: false,
   errData: null,
   getData: async () => {
+    set({ loadData: true });
     await axios
       .get(`${url}/v1/product`)
       .then((res) => {

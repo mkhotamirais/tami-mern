@@ -23,7 +23,7 @@ export function VersionsBtn({ className }: { className?: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={`${className}`}>
-        <Badge variant={"secondary"} className="cursor-pointer font-mono">
+        <Badge variant={"secondary"} className="font-mono flex">
           {version}
         </Badge>
       </DropdownMenuTrigger>

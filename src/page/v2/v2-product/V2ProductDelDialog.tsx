@@ -7,21 +7,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useV1, V1Products } from "@/hooks/useV1";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { FaTrashCan } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "sonner";
 import { url } from "@/lib/constants";
 import { useTransition } from "react";
+import { useV2, V2Products } from "@/hooks/useV2";
 
-export default function V1ProductDelDialog({ item }: { item: V1Products }) {
+export default function V1ProductDelDialog({ item }: { item: V2Products }) {
   const [pending, startTransition] = useTransition();
-  const { getData } = useV1();
+  const { getData } = useV2();
   const onDel = async () => {
     startTransition(() => {
       axios
-        .delete(`${url}/v1/product/${item._id}`)
+        .create({ withCredentials: true })
+        .delete(`${url}/v2/product/${item._id}`)
         .then((res) => {
           toast.success(res.data.message);
           getData();

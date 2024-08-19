@@ -22,7 +22,8 @@ export default function Navbar({ className }: { className?: string }) {
 
   const path1: string = pathname.split("/")[1];
   let path2: string = pathname.split("/")[2];
-  if (!path2) path2 = "v1 home";
+  if (!path2 && path1 === "v1") path2 = "v1 home";
+  if (!path2 && path1 === "v2") path2 = "v2 home";
 
   const onNavClick = () => {
     if (nav) {
@@ -35,7 +36,7 @@ export default function Navbar({ className }: { className?: string }) {
       setNav(navVer1);
     } else if (path1 == "v2") {
       setNav(navVer2);
-    }
+    } else setNav([]);
   }, [path1]);
 
   return (
@@ -51,7 +52,7 @@ export default function Navbar({ className }: { className?: string }) {
             key={i}
             to={item.href}
             className={`${
-              path2 === item.label ? "text-gray-900" : "text-muted-foreground"
+              path2?.toLowerCase() === item.label?.toLowerCase() ? "text-gray-900 font-[500]" : "text-muted-foreground"
             } capitalize hover:text-gray-800 p-2 sm:p-0 hover:bg-muted sm:hover:bg-inherit rounded transition`}
           >
             {item.label}

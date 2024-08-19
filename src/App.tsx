@@ -25,7 +25,7 @@ export default function App() {
       <Footer />
 
       <ScrollRestoration />
-      <Toaster richColors position="top-center" />
+      <Toaster richColors position="top-center" closeButton />
     </div>
   );
 }

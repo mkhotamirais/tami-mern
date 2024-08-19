@@ -11,12 +11,13 @@ import axios from "axios";
 import { url } from "@/lib/constants";
 import { useNavigate, useParams } from "react-router-dom";
 import { useV1 } from "@/hooks/useV1";
+import { Err, LoaderBounce } from "@/components/Wrapper";
 
 type CreateProductForm = z.infer<typeof ProductSchema>;
 
 export default function V1ProductUpdate() {
   const { id } = useParams();
-  const { singleData, getDataById } = useV1();
+  const { singleData, getDataById, loadSingleData, errSingleData } = useV1();
   const [pending, startTransition] = useTransition();
 
   const form = useForm<CreateProductForm>({
@@ -54,9 +55,13 @@ export default function V1ProductUpdate() {
     });
   };
 
-  return (
-    <div className="max-w-xl mx-auto">
-      <h2 className="text-lg font-semibold my-3">Create Product</h2>
+  let content;
+  if (loadSingleData) {
+    content = <LoaderBounce />;
+  } else if (errSingleData) {
+    content = <Err>{errSingleData}</Err>;
+  } else {
+    content = (
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
@@ -77,7 +82,7 @@ export default function V1ProductUpdate() {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Price</FormLabel>
                 <FormControl>
                   <Input
                     disabled={pending}
@@ -97,6 +102,13 @@ export default function V1ProductUpdate() {
           </Button>
         </form>
       </Form>
+    );
+  }
+
+  return (
+    <div className="max-w-xl mx-auto">
+      <h2 className="text-lg font-semibold my-3">Create Product</h2>
+      {content}
     </div>
   );
 }
