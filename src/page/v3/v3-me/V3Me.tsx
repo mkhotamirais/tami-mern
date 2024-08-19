@@ -1,55 +1,57 @@
 import { z } from "zod";
-
-import { useV2 } from "@/hooks/useV2";
-import { useEffect, useState, useTransition } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { UpdateUserSchema } from "../v2Schemas";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+
 import { Err, LoaderBounce } from "@/components/Wrapper";
+import { useEffect, useState, useTransition } from "react";
+import moment from "moment";
+import { UpdateUserSchema } from "../v3Schemas";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import axios from "axios";
-import { url } from "@/lib/constants";
 import { toast } from "sonner";
+import { url } from "@/lib/constants";
+import V3MeDelDialog from "./V3MeDelDialog";
+import { useV3 } from "@/hooks/useV3";
 
-type UpdateUserForm = z.infer<typeof UpdateUserSchema>;
+type UpdateMeForm = z.infer<typeof UpdateUserSchema>;
 
-export default function V2UserUpdate() {
-  const { id } = useParams();
-  const { getUser, user, loadUser, errUser } = useV2();
-  const [pending, startTransition] = useTransition();
+export default function V3Me() {
+  const { me, getMe, loadMe, errMe } = useV3();
   const [changePass, setChangePass] = useState(false);
-  const navigate = useNavigate();
+  const [pending, startTransition] = useTransition();
 
-  const form = useForm<UpdateUserForm>({
+  useEffect(() => {
+    getMe();
+  }, [getMe]);
+
+  const form = useForm<UpdateMeForm>({
     resolver: zodResolver(UpdateUserSchema),
-    defaultValues: { name: "", email: "", password: "", confPassword: "", role: user?.role },
+    defaultValues: { name: "", email: "", password: "", confPassword: "", role: me?.role },
   });
 
   useEffect(() => {
-    if (id) {
-      getUser(id);
-    }
-  }, [getUser, id]);
-
-  useEffect(() => {
-    if (user) {
-      const { name, email, role } = user;
+    if (me) {
+      const { name, email, role } = me;
       form.reset({ name, email, password: "", confPassword: "", role });
     }
-  }, [user, form]);
+  }, [form, me]);
 
-  const onSubmit = (values: UpdateUserForm) => {
+  const noInputData = [
+    { label: "ID", value: me?._id },
+    { label: "Created Time", value: moment(me?.createdAt).fromNow() },
+    { label: "Updated Time", value: moment(me?.updatedAt).fromNow() },
+  ];
+
+  const onSubmit = (values: UpdateMeForm) => {
     startTransition(() => {
       axios
         .create({ withCredentials: true })
-        .patch(`${url}/v2/user/${id}`, values)
+        .patch(`${url}/v3/me`, values)
         .then((res) => {
           toast.success(res.data.message);
-          navigate("/v2/user");
         })
         .catch((err) => {
           toast.error(err.response.data.error || err.message);
@@ -57,13 +59,22 @@ export default function V2UserUpdate() {
     });
   };
 
-  let content;
-  if (loadUser) content = <LoaderBounce />;
-  else if (errUser) content = <Err>{errUser}</Err>;
-  else
-    content = (
+  if (loadMe) return <LoaderBounce />;
+  if (errMe) return <Err>{errMe}</Err>;
+
+  return (
+    <div className="max-w-md mx-auto">
+      <h2 className="text-xl font-semibold">Detail {me?.name}</h2>
+      <div>
+        {noInputData.map((item, i) => (
+          <div key={i} className="grid grid-cols-2 p-1 text-xs border-b rounded">
+            <div>{item.label}</div>
+            <div>{item.value}</div>
+          </div>
+        ))}
+      </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
             control={form.control}
             name="name"
@@ -71,7 +82,7 @@ export default function V2UserUpdate() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input disabled={pending} {...field} placeholder="your name" />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -84,7 +95,7 @@ export default function V2UserUpdate() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" disabled={pending} {...field} placeholder="example@gmail.com" />
+                  <Input type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -127,7 +138,7 @@ export default function V2UserUpdate() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Role</FormLabel>
-                <Select value={field.value} onValueChange={field.onChange} defaultValue={field.value}>
+                <Select disabled={true} value={field.value} onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Choose Role" />
@@ -142,17 +153,12 @@ export default function V2UserUpdate() {
               </FormItem>
             )}
           />
-          <Button disabled={pending} type="submit">
-            Submit
-          </Button>
+          <div className="flex gap-1 justify-between items-center">
+            <Button type="submit">Save</Button>
+            <V3MeDelDialog />
+          </div>
         </form>
       </Form>
-    );
-
-  return (
-    <div className="max-w-xl mx-auto">
-      <h2 className="text-lg font-semibold my-3">Update User</h2>
-      {content}
     </div>
   );
 }

@@ -24,11 +24,15 @@ export default function V1Product() {
           <div className="font-bold">Name</div>
           <div className="font-bold">Price</div>
         </div>
-        <div className="flex flex-col gap-1">
-          {data.map((item) => (
-            <V1ProductList key={item._id} item={item} />
-          ))}
-        </div>
+        {data.length > 0 ? (
+          <div className="flex flex-col gap-1">
+            {data?.map((item) => (
+              <V1ProductList key={item._id} item={item} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center italic">Data empty</div>
+        )}
       </>
     );
   }

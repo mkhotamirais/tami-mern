@@ -15,6 +15,15 @@ const navVer2 = [
   { href: "/v2/user", label: "user" },
 ];
 
+const navVer3 = [
+  { href: "/v3", label: "v2 home" },
+  { href: "/v3/product", label: "product" },
+  { href: "/v3/category", label: "category" },
+  { href: "/v3/tag", label: "tag" },
+  { href: "/v3/kamus", label: "kamus" },
+  { href: "/v3/user", label: "user" },
+];
+
 export default function Navbar({ className }: { className?: string }) {
   const [nav, setNav] = useState<{ href: string; label: string }[]>([]);
   const { pathname } = useLocation();
@@ -24,6 +33,7 @@ export default function Navbar({ className }: { className?: string }) {
   let path2: string = pathname.split("/")[2];
   if (!path2 && path1 === "v1") path2 = "v1 home";
   if (!path2 && path1 === "v2") path2 = "v2 home";
+  if (!path2 && path1 === "v3") path2 = "v3 home";
 
   const onNavClick = () => {
     if (nav) {
@@ -36,6 +46,8 @@ export default function Navbar({ className }: { className?: string }) {
       setNav(navVer1);
     } else if (path1 == "v2") {
       setNav(navVer2);
+    } else if (path1 == "v3") {
+      setNav(navVer3);
     } else setNav([]);
   }, [path1]);
 
@@ -65,17 +77,23 @@ export default function Navbar({ className }: { className?: string }) {
 
 export const NavBtn = () => {
   const { nav, openNav, closeNav } = useBasic();
+  const { pathname } = useLocation();
+  const path1 = pathname.split("/")[1];
   const onClick = () => {
     if (nav) {
       closeNav();
     } else openNav();
   };
 
-  return (
-    <Button onClick={onClick} size={"icon"} variant={"ghost"} className="static sm:hidden">
-      <div className={`${nav ? "rotate-180" : ""} transition`}>
-        {nav ? <FaXmark className="size-5" /> : <FaBars className="size-5" />}
-      </div>
-    </Button>
-  );
+  if (path1 && path1 !== "v1") {
+    return (
+      <Button onClick={onClick} size={"icon"} variant={"ghost"} className="static sm:hidden">
+        <div className={`${nav ? "rotate-180" : ""} transition`}>
+          {nav ? <FaXmark className="size-5" /> : <FaBars className="size-5" />}
+        </div>
+      </Button>
+    );
+  }
+
+  return null;
 };

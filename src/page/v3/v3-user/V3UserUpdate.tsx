@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-import { useV2 } from "@/hooks/useV2";
+import { useV3 } from "@/hooks/useV3";
 import { useEffect, useState, useTransition } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { UpdateUserSchema } from "../v2Schemas";
+import { UpdateUserSchema } from "../v3Schemas";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -17,9 +17,9 @@ import { toast } from "sonner";
 
 type UpdateUserForm = z.infer<typeof UpdateUserSchema>;
 
-export default function V2UserUpdate() {
+export default function V3UserUpdate() {
   const { id } = useParams();
-  const { getUser, user, loadUser, errUser } = useV2();
+  const { getUser, user, loadUser, errUser } = useV3();
   const [pending, startTransition] = useTransition();
   const [changePass, setChangePass] = useState(false);
   const navigate = useNavigate();
@@ -46,10 +46,10 @@ export default function V2UserUpdate() {
     startTransition(() => {
       axios
         .create({ withCredentials: true })
-        .patch(`${url}/v2/user/${id}`, values)
+        .patch(`${url}/v3/user/${id}`, values)
         .then((res) => {
           toast.success(res.data.message);
-          navigate("/v2/user");
+          navigate("/v3/user");
         })
         .catch((err) => {
           toast.error(err.response.data.error || err.message);

@@ -1,10 +1,10 @@
 import { Err, LoaderBounce } from "@/components/Wrapper";
-import { useV2 } from "@/hooks/useV2";
+import { useV3 } from "@/hooks/useV3";
 import { useEffect } from "react";
-import V2UserList from "./V2UserList";
+import V3UserList from "./V3UserList";
 
-export default function V2User() {
-  const { users, getUsers, loadUsers, errUsers } = useV2();
+export default function V3User() {
+  const { users, getUsers, loadUsers, errUsers } = useV3();
 
   useEffect(() => {
     getUsers();
@@ -21,7 +21,7 @@ export default function V2User() {
         {users
           .filter((item) => item.email !== "ahmad@gmail.com")
           .map((item) => (
-            <V2UserList key={item._id} item={item} />
+            <V3UserList key={item._id} item={item} />
           ))}
       </div>
     );

@@ -13,19 +13,19 @@ import axios from "axios";
 import { toast } from "sonner";
 import { url } from "@/lib/constants";
 import { useTransition } from "react";
-import { useV2, V2Products } from "@/hooks/useV2";
+import { useV3, V3Users } from "@/hooks/useV3";
 
-export default function V2ProductDelDialog({ item }: { item: V2Products }) {
+export default function V3UserDelDialog({ item }: { item: V3Users }) {
   const [pending, startTransition] = useTransition();
-  const { getData } = useV2();
+  const { getUsers } = useV3();
   const onDel = async () => {
     startTransition(() => {
       axios
         .create({ withCredentials: true })
-        .delete(`${url}/v2/product/${item._id}`)
+        .delete(`${url}/v3/user/${item._id}`)
         .then((res) => {
           toast.success(res.data.message);
-          getData();
+          getUsers();
         })
         .catch((err) => {
           toast.error(err.response.data.error || err.message);

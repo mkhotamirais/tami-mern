@@ -12,6 +12,7 @@ export function VersionsBtn({ className }: { className?: string }) {
     { href: "/", label: "v0" },
     { href: "/v1", label: "v1" },
     { href: "/v2", label: "v2" },
+    { href: "/v3", label: "v3" },
   ];
 
   useEffect(() => {

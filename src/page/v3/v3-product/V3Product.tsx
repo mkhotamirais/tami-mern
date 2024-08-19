@@ -1,12 +1,12 @@
 import { Err, LoaderBounce } from "@/components/Wrapper";
 import { useEffect } from "react";
-import V2ProductList from "./V2ProductList";
+import V3ProductList from "./V3ProductList";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useV2 } from "@/hooks/useV2";
+import { useV3 } from "@/hooks/useV3";
 
-export default function V2Product() {
-  const { data, getData, loadData, errData } = useV2();
+export default function V3Product() {
+  const { data, getData, loadData, errData } = useV3();
 
   useEffect(() => {
     getData();
@@ -27,7 +27,7 @@ export default function V2Product() {
         {data.length > 0 ? (
           <div className="flex flex-col gap-1">
             {data?.map((item) => (
-              <V2ProductList key={item._id} item={item} />
+              <V3ProductList key={item._id} item={item} />
             ))}
           </div>
         ) : (
@@ -42,7 +42,7 @@ export default function V2Product() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold my-3">Product List</h2>
         <Button size={"sm"} asChild>
-          <Link to="/v2/product-create">Add New</Link>
+          <Link to="/v3/product-create">Add New</Link>
         </Button>
       </div>
 

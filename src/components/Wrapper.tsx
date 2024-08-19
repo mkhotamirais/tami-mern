@@ -9,7 +9,7 @@ export const Container = ({ children }: { children: React.ReactNode }) => (
 
 export const LandingTitle = ({ title, description }: { title: string; description: string }) => (
   <div className="leading-relaxed">
-    <h1 className="text-3xl font-bold mb-2">{title}</h1>
+    <h1 className="text-3xl font-bold mb-2 uppercase">{title}</h1>
     <p className="text-muted-foreground">{description}</p>
   </div>
 );
