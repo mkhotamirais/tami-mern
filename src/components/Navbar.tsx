@@ -87,7 +87,7 @@ export const NavBtn = () => {
     } else openNav();
   };
 
-  if (path1 && path1 !== "v1") {
+  if (path1 && path1 !== "v0") {
     return (
       <Button onClick={onClick} size={"icon"} variant={"ghost"} className="static sm:hidden">
         <div className={`${nav ? "rotate-180" : ""} transition`}>

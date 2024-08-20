@@ -52,10 +52,12 @@ export interface V3Users {
 }
 
 interface V3State {
+  query: { [key: string]: string };
+  setQuery: (newQuery: { [ke: string]: string }) => void;
   data: V3Products[];
   loadData: boolean;
   errData: string | null;
-  getData: () => void;
+  getData: (params: string) => void;
   singleData: V3Products | null;
   loadSingleData: boolean;
   errSingleData: string | null;
@@ -99,13 +101,15 @@ interface V3State {
 }
 
 export const useV3 = create<V3State>((set) => ({
+  query: {},
+  setQuery: (newQuery) => set((state) => ({ query: { ...state.query, ...newQuery } })),
   data: [],
   loadData: false,
   errData: null,
-  getData: async () => {
+  getData: async (params) => {
     set({ loadData: true });
     await axiosCred
-      .get(`${url}/v3/product`)
+      .get(`${url}/v3/product?${params}`)
       .then((res) => {
         set({ data: res.data });
       })

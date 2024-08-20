@@ -29,7 +29,6 @@ export default function V3ProductCreate() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: CreateProductForm) => {
-    console.log(values);
     startTransition(() => {
       axios
         .create({ withCredentials: true })
@@ -145,32 +144,35 @@ export default function V3ProductCreate() {
             render={() => (
               <FormItem>
                 <FormLabel>Tag</FormLabel>
-                {tag.map((item) => (
-                  <FormField
-                    key={item?._id}
-                    control={form.control}
-                    name="tag"
-                    render={({ field }) => {
-                      return (
-                        <FormItem key={item?._id} className="flex flex-row items-start space-x-3 space-y-0">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(item?._id)}
-                              onCheckedChange={(checked) => {
-                                if (checked) {
-                                  field.onChange([...field.value, item?._id]);
-                                } else {
-                                  field.onChange(field.value?.filter((value) => value !== item?._id));
-                                }
-                              }}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">{item?.name}</FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
+                <div className="flex flex-wrap gap-6 border p-3 rounded-lg">
+                  {tag.map((item) => (
+                    <FormField
+                      key={item?._id}
+                      control={form.control}
+                      name="tag"
+                      render={({ field }) => {
+                        return (
+                          <FormItem key={item?._id} className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(item?._id)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    field.onChange([...field.value, item?._id]);
+                                  } else {
+                                    field.onChange(field.value?.filter((value) => value !== item?._id));
+                                  }
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal">{item?.name}</FormLabel>
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  ))}
+                </div>
+
                 <FormMessage />
               </FormItem>
             )}
