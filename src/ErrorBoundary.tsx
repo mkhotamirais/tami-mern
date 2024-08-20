@@ -1,7 +1,8 @@
-import { Link, isRouteErrorResponse, useRouteError } from "react-router-dom";
+import { Link, isRouteErrorResponse, useNavigate, useRouteError } from "react-router-dom";
 
 const ErrorBoundary = () => {
   const error = useRouteError();
+  const navigate = useNavigate();
 
   let content;
   if (isRouteErrorResponse(error)) {
@@ -19,9 +20,14 @@ const ErrorBoundary = () => {
   return (
     <main className="min-h-screen dark:bg-slate-800 dark:text-white flex flex-col gap-3 items-center justify-center italic text-2xl sm:text-lg">
       {content}
-      <Link to="/" className="underline text-sm">
-        Back to Home
-      </Link>
+      <div className="flex flex-col gap-2 items-center">
+        <Link to="/" className="underline text-sm">
+          Back to Home
+        </Link>
+        <button type="button" onClick={() => navigate(-1)} className="underline text-sm">
+          Back to previous page
+        </button>
+      </div>
     </main>
   );
 };

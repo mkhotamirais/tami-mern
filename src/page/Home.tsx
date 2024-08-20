@@ -9,6 +9,11 @@ import { LandingTitle } from "@/components/Wrapper";
 import { Link } from "react-router-dom";
 
 export default function Home() {
+  const versionList = [
+    { href: "/v1", label: "v1" },
+    { href: "/v2", label: "v2" },
+    { href: "/v3", label: "v3" },
+  ];
   return (
     <>
       <div className="flex flex-col space-y-8 items-center text-center justify-center h-[calc(100vh-8rem)]">
@@ -25,16 +30,13 @@ export default function Home() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="font-mono">
-            <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link to="/v1" className="flex justify-center">
-                v1
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer" asChild>
-              <Link to="/v2" className="flex justify-center">
-                v2
-              </Link>
-            </DropdownMenuItem>
+            {versionList.map((item, i) => (
+              <DropdownMenuItem key={i} className="cursor-pointer" asChild>
+                <Link to={item.href} className="flex justify-center">
+                  {item.label}
+                </Link>
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

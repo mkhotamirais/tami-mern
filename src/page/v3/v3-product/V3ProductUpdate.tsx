@@ -9,35 +9,25 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { url } from "@/lib/constants";
 import { useNavigate, useParams } from "react-router-dom";
-import { Err, LoaderBounce } from "@/components/Wrapper";
-import { useV3 } from "@/hooks/useV3";
 import { ProductSchema } from "../v3Schemas";
+import { useV3 } from "@/hooks/useV3";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Err, LoaderBounce } from "@/components/Wrapper";
 
 type CreateProductForm = z.infer<typeof ProductSchema>;
 
 export default function V3ProductUpdate() {
   const { id } = useParams();
-  const { singleData, getDataById, loadSingleData, errSingleData } = useV3();
   const [pending, startTransition] = useTransition();
+  const { singleData, getDataById, cat, tag, getCat, getTag, loadCat, loadTag, errCat, errTag } = useV3();
 
   const form = useForm<CreateProductForm>({
     resolver: zodResolver(ProductSchema),
-    defaultValues: { name: "", price: "" },
+    defaultValues: { name: "", price: "", category: "", tag: [], description: "" },
   });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (id) {
-      getDataById(id);
-    }
-  }, [getDataById, id]);
-
-  useEffect(() => {
-    if (singleData) {
-      const { name, price } = singleData;
-      form.reset({ name, price });
-    }
-  }, [singleData, form]);
 
   const onSubmit = async (values: CreateProductForm) => {
     startTransition(() => {
@@ -54,13 +44,32 @@ export default function V3ProductUpdate() {
     });
   };
 
-  let content;
-  if (loadSingleData) {
-    content = <LoaderBounce />;
-  } else if (errSingleData) {
-    content = <Err>{errSingleData}</Err>;
-  } else {
-    content = (
+  useEffect(() => {
+    if (id) {
+      getDataById(id);
+    }
+    getCat();
+    getTag();
+  }, [getCat, getTag, getDataById, id]);
+
+  useEffect(() => {
+    if (singleData) {
+      const { name, price, description, category, tag } = singleData;
+      form.reset({ name, price, description, category: category?._id, tag: tag.map((t) => t._id) });
+    }
+  }, [singleData, form]);
+
+  if (loadCat && loadTag) return <LoaderBounce />;
+  if (errCat && errTag)
+    return (
+      <Err>
+        {errCat} - {errTag}
+      </Err>
+    );
+
+  return (
+    <div className="max-w-xl mx-auto">
+      <h2 className="text-lg font-semibold my-3">Update Product</h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <FormField
@@ -96,18 +105,92 @@ export default function V3ProductUpdate() {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea
+                    disabled={pending}
+                    {...field}
+                    placeholder="Product description"
+                    onFocus={(e) => e.target.select()}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {cat.map((item) => (
+                        <SelectItem key={item?._id} value={item?._id}>
+                          {item?.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="tag"
+            render={() => (
+              <FormItem>
+                <FormLabel>Tag</FormLabel>
+                {tag.map((item) => (
+                  <FormField
+                    key={item?._id}
+                    control={form.control}
+                    name="tag"
+                    render={({ field }) => {
+                      return (
+                        <FormItem key={item?._id} className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(item?._id)}
+                              onCheckedChange={(checked) => {
+                                if (checked) {
+                                  field.onChange([...field.value, item?._id]);
+                                } else {
+                                  field.onChange(field.value?.filter((value) => value !== item?._id));
+                                }
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal">{item?.name}</FormLabel>
+                        </FormItem>
+                      );
+                    }}
+                  />
+                ))}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <Button disabled={pending} type="submit">
-            {pending ? "Loading.." : "Submit"}
+            {pending ? "Loading.." : "Save"}
           </Button>
         </form>
       </Form>
-    );
-  }
-
-  return (
-    <div className="max-w-xl mx-auto">
-      <h2 className="text-lg font-semibold my-3">Create Product</h2>
-      {content}
     </div>
   );
 }

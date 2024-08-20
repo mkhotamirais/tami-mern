@@ -10,43 +10,43 @@ import axios from "axios";
 import { url } from "@/lib/constants";
 import { useNavigate, useParams } from "react-router-dom";
 import { Err, LoaderBounce } from "@/components/Wrapper";
-import { useV2 } from "@/hooks/useV2";
-import { ProductSchema } from "../v2Schemas";
+import { useV3 } from "@/hooks/useV3";
+import { TagSchema } from "../v3Schemas";
 
-type CreateProductForm = z.infer<typeof ProductSchema>;
+type CreateTagForm = z.infer<typeof TagSchema>;
 
-export default function V2ProductUpdate() {
+export default function V3TagUpdate() {
   const { id } = useParams();
-  const { singleData, getDataById, loadSingleData, errSingleData } = useV2();
+  const { singleTag, getTagById, loadSingleTag, errSingleTag } = useV3();
   const [pending, startTransition] = useTransition();
 
-  const form = useForm<CreateProductForm>({
-    resolver: zodResolver(ProductSchema),
-    defaultValues: { name: "", price: "" },
+  const form = useForm<CreateTagForm>({
+    resolver: zodResolver(TagSchema),
+    defaultValues: { name: "" },
   });
   const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
-      getDataById(id);
+      getTagById(id);
     }
-  }, [getDataById, id]);
+  }, [getTagById, id]);
 
   useEffect(() => {
-    if (singleData) {
-      const { name, price } = singleData;
-      form.reset({ name, price });
+    if (singleTag) {
+      const { name } = singleTag;
+      form.reset({ name });
     }
-  }, [singleData, form]);
+  }, [singleTag, form]);
 
-  const onSubmit = async (values: CreateProductForm) => {
+  const onSubmit = async (values: CreateTagForm) => {
     startTransition(() => {
       axios
         .create({ withCredentials: true })
-        .patch(`${url}/v2/product/${id}`, values)
+        .patch(`${url}/v3/tag/${id}`, values)
         .then((res) => {
           toast.success(res.data.message);
-          navigate("/v2/product");
+          navigate("/v3/tag");
         })
         .catch((err) => {
           toast.error(err.response.data.error || err.message);
@@ -55,10 +55,10 @@ export default function V2ProductUpdate() {
   };
 
   let content;
-  if (loadSingleData) {
+  if (loadSingleTag) {
     content = <LoaderBounce />;
-  } else if (errSingleData) {
-    content = <Err>{errSingleData}</Err>;
+  } else if (errSingleTag) {
+    content = <Err>{errSingleTag}</Err>;
   } else {
     content = (
       <Form {...form}>
@@ -70,27 +70,7 @@ export default function V2ProductUpdate() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input disabled={pending} {...field} placeholder="Product name" onFocus={(e) => e.target.select()} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Price</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={pending}
-                    {...field}
-                    placeholder="Product price"
-                    type="number"
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    onFocus={(e) => e.target.select()}
-                  />
+                  <Input disabled={pending} {...field} placeholder="Tag name" onFocus={(e) => e.target.select()} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -106,7 +86,7 @@ export default function V2ProductUpdate() {
 
   return (
     <div className="max-w-xl mx-auto">
-      <h2 className="text-lg font-semibold my-3">Update Product</h2>
+      <h2 className="text-lg font-semibold my-3">Update Tag</h2>
       {content}
     </div>
   );

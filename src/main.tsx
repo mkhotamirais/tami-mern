@@ -30,6 +30,15 @@ import V3ProductCreate from "./page/v3/v3-product/V3ProductCreate.tsx";
 import V3ProductUpdate from "./page/v3/v3-product/V3ProductUpdate.tsx";
 import V3UserUpdate from "./page/v3/v3-user/V3UserUpdate.tsx";
 import V3User from "./page/v3/v3-user/V3User.tsx";
+import V3Category from "./page/v3/v3-category/V3Category.tsx";
+import V3CategoryCreate from "./page/v3/v3-category/V3CategoryCreate.tsx";
+import V3CategoryUpdate from "./page/v3/v3-category/V3CategoryUpdate.tsx";
+import V3Tag from "./page/v3/v3-tag/V3Tag.tsx";
+import V3TagCreate from "./page/v3/v3-tag/V3TagCreate.tsx";
+import V3TagUpdate from "./page/v3/v3-tag/V3TagUpdate.tsx";
+import V3Kamus from "./page/v3/v3-kamus/V3Kamus.tsx";
+import V3KamusCreate from "./page/v3/v3-kamus/V3KamusCreate.tsx";
+import V3KamusUpdate from "./page/v3/v3-kamus/V3KamusUpdate.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -63,12 +72,21 @@ const router = createBrowserRouter(
           <Route path="login" element={<V3Login />} />
           <Route path="register" element={<V3Register />} />
         </Route>
+        <Route path="product" element={<V3Product />} />
+        <Route path="category" element={<V3Category />} />
+        <Route path="tag" element={<V3Tag />} />
+        <Route path="kamus" element={<V3Kamus />} />
         <Route element={<V3Protected />}>
           <Route path="user" element={<V3User />} />
           <Route path="user-update/:id" element={<V3UserUpdate />} />
-          <Route path="product" element={<V3Product />} />
           <Route path="product-create" element={<V3ProductCreate />} />
           <Route path="product-update/:id" element={<V3ProductUpdate />} />
+          <Route path="category-create" element={<V3CategoryCreate />} />
+          <Route path="category-update/:id" element={<V3CategoryUpdate />} />
+          <Route path="tag-create" element={<V3TagCreate />} />
+          <Route path="tag-update/:id" element={<V3TagUpdate />} />
+          <Route path="kamus-create" element={<V3KamusCreate />} />
+          <Route path="kamus-update/:id" element={<V3KamusUpdate />} />
         </Route>
       </Route>
     </Route>

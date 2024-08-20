@@ -1,29 +1,29 @@
 import { Err, LoaderBounce } from "@/components/Wrapper";
 import { useEffect } from "react";
-import V3ProductList from "./V3ProductList";
+import V3CategoryList from "./V3CategoryList";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useV3 } from "@/hooks/useV3";
 
-export default function V3Product() {
-  const { data, getData, loadData, errData } = useV3();
+export default function V3Category() {
+  const { cat, getCat, loadCat, errCat } = useV3();
 
   useEffect(() => {
-    getData();
-  }, [getData]);
+    getCat();
+  }, [getCat]);
 
   let content;
-  if (loadData) {
+  if (loadCat) {
     content = <LoaderBounce />;
-  } else if (errData) {
-    content = <Err>{errData}</Err>;
+  } else if (errCat) {
+    content = <Err>{errCat}</Err>;
   } else {
     content = (
       <>
-        {data.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            {data?.map((item) => (
-              <V3ProductList key={item._id} item={item} />
+        {cat.length > 0 ? (
+          <div className="flex flex-col gap-1">
+            {cat?.map((item) => (
+              <V3CategoryList key={item._id} item={item} />
             ))}
           </div>
         ) : (
@@ -34,11 +34,11 @@ export default function V3Product() {
   }
 
   return (
-    <div className="mx-auto">
+    <div className="max-w-xl mx-auto">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold my-3">Product List</h2>
+        <h2 className="text-lg font-semibold my-3">Category List</h2>
         <Button size={"sm"} asChild>
-          <Link to="/v3/product-create">Add New</Link>
+          <Link to="/v3/category-create">Add New</Link>
         </Button>
       </div>
 

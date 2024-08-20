@@ -6,6 +6,20 @@ export const ProductSchema = z.object({
     z.number().positive("Price must be a positive number"),
     z.string().min(1, "Product price is required"),
   ]),
+  description: z.string().min(1, "Description is required"),
+  // tag: z.array(z.string()).nonempty("At least one tag is required"),
+  tag: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: "You have to select at least one item.",
+  }),
+  category: z.string().min(1, "Category is required"),
+});
+
+export const CategorySchema = z.object({
+  name: z.string().min(1, "Category name is required"),
+});
+
+export const TagSchema = z.object({
+  name: z.string().min(1, "Category name is required"),
 });
 
 export const LoginSchema = z.object({

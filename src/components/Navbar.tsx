@@ -64,7 +64,9 @@ export default function Navbar({ className }: { className?: string }) {
             key={i}
             to={item.href}
             className={`${
-              path2?.toLowerCase() === item.label?.toLowerCase() ? "text-gray-900 font-[500]" : "text-muted-foreground"
+              path2?.toLowerCase().includes(item.label?.toLowerCase())
+                ? "text-gray-900 font-[500]"
+                : "text-muted-foreground"
             } capitalize hover:text-gray-800 p-2 sm:p-0 hover:bg-muted sm:hover:bg-inherit rounded transition`}
           >
             {item.label}

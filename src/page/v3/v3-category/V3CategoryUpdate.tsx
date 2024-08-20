@@ -10,43 +10,43 @@ import axios from "axios";
 import { url } from "@/lib/constants";
 import { useNavigate, useParams } from "react-router-dom";
 import { Err, LoaderBounce } from "@/components/Wrapper";
-import { useV2 } from "@/hooks/useV2";
-import { ProductSchema } from "../v2Schemas";
+import { useV3 } from "@/hooks/useV3";
+import { CategorySchema } from "../v3Schemas";
 
-type CreateProductForm = z.infer<typeof ProductSchema>;
+type CreateCategoryForm = z.infer<typeof CategorySchema>;
 
-export default function V2ProductUpdate() {
+export default function V3CategoryUpdate() {
   const { id } = useParams();
-  const { singleData, getDataById, loadSingleData, errSingleData } = useV2();
+  const { singleCat, getCatById, loadSingleCat, errSingleCat } = useV3();
   const [pending, startTransition] = useTransition();
 
-  const form = useForm<CreateProductForm>({
-    resolver: zodResolver(ProductSchema),
-    defaultValues: { name: "", price: "" },
+  const form = useForm<CreateCategoryForm>({
+    resolver: zodResolver(CategorySchema),
+    defaultValues: { name: "" },
   });
   const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
-      getDataById(id);
+      getCatById(id);
     }
-  }, [getDataById, id]);
+  }, [getCatById, id]);
 
   useEffect(() => {
-    if (singleData) {
-      const { name, price } = singleData;
-      form.reset({ name, price });
+    if (singleCat) {
+      const { name } = singleCat;
+      form.reset({ name });
     }
-  }, [singleData, form]);
+  }, [singleCat, form]);
 
-  const onSubmit = async (values: CreateProductForm) => {
+  const onSubmit = async (values: CreateCategoryForm) => {
     startTransition(() => {
       axios
         .create({ withCredentials: true })
-        .patch(`${url}/v2/product/${id}`, values)
+        .patch(`${url}/v3/category/${id}`, values)
         .then((res) => {
           toast.success(res.data.message);
-          navigate("/v2/product");
+          navigate("/v3/category");
         })
         .catch((err) => {
           toast.error(err.response.data.error || err.message);
@@ -55,10 +55,10 @@ export default function V2ProductUpdate() {
   };
 
   let content;
-  if (loadSingleData) {
+  if (loadSingleCat) {
     content = <LoaderBounce />;
-  } else if (errSingleData) {
-    content = <Err>{errSingleData}</Err>;
+  } else if (errSingleCat) {
+    content = <Err>{errSingleCat}</Err>;
   } else {
     content = (
       <Form {...form}>
@@ -70,27 +70,7 @@ export default function V2ProductUpdate() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input disabled={pending} {...field} placeholder="Product name" onFocus={(e) => e.target.select()} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Price</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={pending}
-                    {...field}
-                    placeholder="Product price"
-                    type="number"
-                    onChange={(e) => field.onChange(Number(e.target.value))}
-                    onFocus={(e) => e.target.select()}
-                  />
+                  <Input disabled={pending} {...field} placeholder="Category name" onFocus={(e) => e.target.select()} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -106,7 +86,7 @@ export default function V2ProductUpdate() {
 
   return (
     <div className="max-w-xl mx-auto">
-      <h2 className="text-lg font-semibold my-3">Update Product</h2>
+      <h2 className="text-lg font-semibold my-3">Update Category</h2>
       {content}
     </div>
   );
