@@ -57,7 +57,7 @@ interface V3State {
   data: V3Products[];
   loadData: boolean;
   errData: string | null;
-  getData: (params: string) => void;
+  getData: (params?: string) => void;
   singleData: V3Products | null;
   loadSingleData: boolean;
   errSingleData: string | null;
@@ -106,7 +106,7 @@ export const useV3 = create<V3State>((set) => ({
   data: [],
   loadData: false,
   errData: null,
-  getData: async (params) => {
+  getData: async (params = "") => {
     set({ loadData: true });
     await axiosCred
       .get(`${url}/v3/product?${params}`)
