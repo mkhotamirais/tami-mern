@@ -37,6 +37,11 @@ const navVer4 = [
   { href: "/v4/product", label: "product" },
 ];
 
+const navVer5 = [
+  { href: "/v5", label: "v5 home" },
+  { href: "/v5/product", label: "product" },
+];
+
 export default function Navbar({ className }: { className?: string }) {
   const [nav, setNav] = useState<{ href: string; label: string }[]>([]);
   const { pathname } = useLocation();
@@ -49,6 +54,7 @@ export default function Navbar({ className }: { className?: string }) {
   if (!path2 && path1 === "v2") path2 = "v2 home";
   if (!path2 && path1 === "v3") path2 = "v3 home";
   if (!path2 && path1 === "v4") path2 = "v4 home";
+  if (!path2 && path1 === "v5") path2 = "v5 home";
 
   const onNavClick = () => {
     if (nav) {
@@ -67,6 +73,8 @@ export default function Navbar({ className }: { className?: string }) {
       setNav(navVer3);
     } else if (path1 == "v4") {
       setNav(navVer4);
+    } else if (path1 == "v5") {
+      setNav(navVer5);
     } else setNav([]);
   }, [path1]);
 

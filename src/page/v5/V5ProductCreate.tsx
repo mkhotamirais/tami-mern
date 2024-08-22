@@ -8,9 +8,8 @@ import axios from "axios";
 import { url } from "@/lib/constants";
 import { toast } from "sonner";
 
-export default function V4ProductCreate() {
+export default function V5ProductCreate() {
   const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
   const [image, setImage] = useState<File | string>("");
   const [preview, setPreview] = useState("");
   const [pending, startTransition] = useTransition();
@@ -22,13 +21,12 @@ export default function V4ProductCreate() {
     startTransition(() => {
       const formData = new FormData();
       formData.append("name", name);
-      formData.append("price", price);
       formData.append("image", image);
       axios
-        .post(`${url}/v4/product`, formData)
+        .post(`${url}/v5/product`, formData)
         .then((res) => {
           toast.success(res.data.message);
-          navigate("/v4/product");
+          navigate("/v5/product");
         })
         .catch((err) => {
           if (err.response) {
@@ -46,10 +44,6 @@ export default function V4ProductCreate() {
         <div>
           <Label htmlFor="name">Name</Label>
           <Input disabled={pending} id="name" value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
-        <div>
-          <Label htmlFor="price">Price</Label>
-          <Input disabled={pending} type="number" id="price" value={price} onChange={(e) => setPrice(e.target.value)} />
         </div>
         <div>
           <Label id="image">Image</Label>

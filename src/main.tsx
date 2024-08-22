@@ -49,6 +49,10 @@ import V4 from "./page/v4/V4.tsx";
 import V4Product from "./page/v4/V4Product.tsx";
 import V4ProductCreate from "./page/v4/V4ProductCreate.tsx";
 import V4ProductUpdate from "./page/v4/V4ProductUpdate.tsx";
+import V5 from "./page/v5/V5.tsx";
+import V5Product from "./page/v5/V5Product.tsx";
+import V5ProductUpdate from "./page/v5/V5ProductUpdate.tsx";
+import V5ProductCreate from "./page/v5/V5ProductCreate.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -111,6 +115,12 @@ const router = createBrowserRouter(
         <Route path="product" element={<V4Product />} />
         <Route path="product-create" element={<V4ProductCreate />} />
         <Route path="product-update/:id" element={<V4ProductUpdate />} />
+      </Route>
+      <Route path="v5">
+        <Route index element={<V5 />} />
+        <Route path="product" element={<V5Product />} />
+        <Route path="product-create" element={<V5ProductCreate />} />
+        <Route path="product-update/:id" element={<V5ProductUpdate />} />
       </Route>
     </Route>
   )
