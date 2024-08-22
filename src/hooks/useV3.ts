@@ -114,8 +114,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ data: res.data });
       })
       .catch((err) => {
-        console.log(err);
-        set({ errData: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errData: err.response.data.error });
+        } else set({ errData: err.message });
       })
       .finally(() => set({ loadData: false }));
   },
@@ -130,7 +131,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ singleData: res.data });
       })
       .catch((err) => {
-        set({ errSingleData: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errSingleData: err.response.data.error });
+        } else set({ errSingleData: err.message });
       })
       .finally(() => set({ loadSingleData: false }));
   },
@@ -145,8 +148,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ cat: res.data });
       })
       .catch((err) => {
-        console.log(err);
-        set({ errCat: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errCat: err.response.data.error });
+        } else set({ errCat: err.message });
       })
       .finally(() => set({ loadCat: false }));
   },
@@ -161,8 +165,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ singleCat: res.data });
       })
       .catch((err) => {
-        console.log(err);
-        set({ errSingleCat: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errSingleCat: err.response.data.error });
+        } else set({ errSingleCat: err.message });
       })
       .finally(() => set({ loadSingleCat: false }));
   },
@@ -177,8 +182,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ tag: res.data });
       })
       .catch((err) => {
-        console.log(err);
-        set({ errTag: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errTag: err.response.data.error });
+        } else set({ errTag: err.message });
       })
       .finally(() => set({ loadTag: false }));
   },
@@ -193,8 +199,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ singleTag: res.data });
       })
       .catch((err) => {
-        console.log(err);
-        set({ errSingleTag: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errSingleTag: err.response.data.error });
+        } else set({ errSingleTag: err.message });
       })
       .finally(() => set({ loadSingleTag: false }));
   },
@@ -209,8 +216,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ kamus: res.data });
       })
       .catch((err) => {
-        console.log(err);
-        set({ errKamus: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errKamus: err.response.data.error });
+        } else set({ errKamus: err.message });
       })
       .finally(() => set({ loadKamus: false }));
   },
@@ -225,8 +233,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ singleKamus: res.data });
       })
       .catch((err) => {
-        console.log(err);
-        set({ errSingleKamus: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errSingleKamus: err.response.data.error });
+        } else set({ errSingleKamus: err.message });
       })
       .finally(() => set({ loadSingleTag: false }));
   },
@@ -241,7 +250,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ users: res.data });
       })
       .catch((err) => {
-        set({ errUsers: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errUsers: err.response.data.error });
+        } else set({ errUsers: err.message });
       })
       .finally(() => set({ loadUsers: false }));
   },
@@ -256,7 +267,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ user: res.data });
       })
       .catch((err) => {
-        set({ errUser: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errUser: err.response.data.error });
+        } else set({ errUser: err.message });
       })
       .finally(() => set({ loadUser: false }));
   },
@@ -271,7 +284,9 @@ export const useV3 = create<V3State>((set) => ({
         set({ me: res.data });
       })
       .catch((err) => {
-        set({ errMe: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errMe: err.response.data.error });
+        } else set({ errMe: err.message });
       })
       .finally(() => set({ loadMe: false }));
   },

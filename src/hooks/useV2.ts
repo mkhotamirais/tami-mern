@@ -58,7 +58,9 @@ export const useV2 = create<V2State>((set) => ({
         set({ data: res.data });
       })
       .catch((err) => {
-        set({ errData: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errData: err.response.data.error });
+        } else set({ errData: err.message });
       })
       .finally(() => set({ loadData: false }));
   },
@@ -73,7 +75,9 @@ export const useV2 = create<V2State>((set) => ({
         set({ singleData: res.data });
       })
       .catch((err) => {
-        set({ errSingleData: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errSingleData: err.response.data.error });
+        } else set({ errSingleData: err.message });
       })
       .finally(() => set({ loadSingleData: false }));
   },
@@ -88,7 +92,9 @@ export const useV2 = create<V2State>((set) => ({
         set({ users: res.data });
       })
       .catch((err) => {
-        set({ errUsers: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errUsers: err.response.data.error });
+        } else set({ errUsers: err.message });
       })
       .finally(() => set({ loadUsers: false }));
   },
@@ -103,7 +109,9 @@ export const useV2 = create<V2State>((set) => ({
         set({ user: res.data });
       })
       .catch((err) => {
-        set({ errUser: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errUser: err.response.data.error });
+        } else set({ errUser: err.message });
       })
       .finally(() => set({ loadUser: false }));
   },
@@ -118,7 +126,9 @@ export const useV2 = create<V2State>((set) => ({
         set({ me: res.data });
       })
       .catch((err) => {
-        set({ errMe: err.response.data.error || err.message });
+        if (err.response) {
+          set({ errMe: err.response.data.error });
+        } else set({ errMe: err.message });
       })
       .finally(() => set({ loadMe: false }));
   },

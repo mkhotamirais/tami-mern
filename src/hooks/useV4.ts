@@ -2,33 +2,35 @@ import { create } from "zustand";
 import axios from "axios";
 import { url } from "@/lib/constants";
 
-export interface V1Products {
+export interface V4Products {
   _id: string;
   name: string;
   price: string | number;
+  imageName: string;
+  imageUrl: string;
   createdAt: string;
   updatedAt: string;
 }
 
-interface V1State {
-  data: V1Products[];
+interface V4State {
+  data: V4Products[];
   loadData: boolean;
   errData: string | null;
   getData: () => void;
-  singleData: V1Products | null;
+  singleData: V4Products | null;
   loadSingleData: boolean;
   errSingleData: string | null;
   getDataById: (id: string) => void;
 }
 
-export const useV1 = create<V1State>((set) => ({
+export const useV4 = create<V4State>((set) => ({
   data: [],
   loadData: false,
   errData: null,
   getData: async () => {
     set({ loadData: true });
     await axios
-      .get(`${url}/v1/product`)
+      .get(`${url}/v4/product`)
       .then((res) => {
         set({ data: res.data });
       })
@@ -45,7 +47,7 @@ export const useV1 = create<V1State>((set) => ({
   getDataById: async (id) => {
     set({ loadSingleData: true });
     await axios
-      .get(`${url}/v1/product/${id}`)
+      .get(`${url}/v4/product/${id}`)
       .then((res) => {
         set({ singleData: res.data });
       })

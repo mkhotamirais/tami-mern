@@ -25,8 +25,8 @@ export default function Home() {
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button asChild className="rounded-full" size="lg">
-              <Link to="/v1">Explore</Link>
+            <Button className="rounded-full" size="lg">
+              Explore
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="font-mono">

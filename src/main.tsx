@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+
 import Home from "./page/Home.tsx";
 import V1 from "./page/v1/V1.tsx";
 import V2 from "./page/v2/V2.tsx";
@@ -39,11 +40,27 @@ import V3TagUpdate from "./page/v3/v3-tag/V3TagUpdate.tsx";
 import V3Kamus from "./page/v3/v3-kamus/V3Kamus.tsx";
 import V3KamusCreate from "./page/v3/v3-kamus/V3KamusCreate.tsx";
 import V3KamusUpdate from "./page/v3/v3-kamus/V3KamusUpdate.tsx";
+import V0 from "./page/v0/V0.tsx";
+import Todo1 from "./page/v0/todo/todo1/Todo1.tsx";
+import Todo2 from "./page/v0/todo/todo2/Todo2.tsx";
+import Todo3 from "./page/v0/todo/todo3/Todo3.tsx";
+import Todo4 from "./page/v0/todo/todo4/Todo4.tsx";
+import V4 from "./page/v4/V4.tsx";
+import V4Product from "./page/v4/V4Product.tsx";
+import V4ProductCreate from "./page/v4/V4ProductCreate.tsx";
+import V4ProductUpdate from "./page/v4/V4ProductUpdate.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<ErrorBoundary />}>
       <Route index element={<Home />} />
+      <Route path="v0">
+        <Route index element={<V0 />} />
+        <Route path="todo1" element={<Todo1 />} />
+        <Route path="todo2" element={<Todo2 />} />
+        <Route path="todo3" element={<Todo3 />} />
+        <Route path="todo4" element={<Todo4 />} />
+      </Route>
       <Route path="v1">
         <Route index element={<V1 />} />
         <Route path="product" element={<V1Product />} />
@@ -88,6 +105,12 @@ const router = createBrowserRouter(
           <Route path="kamus-create" element={<V3KamusCreate />} />
           <Route path="kamus-update/:id" element={<V3KamusUpdate />} />
         </Route>
+      </Route>
+      <Route path="v4">
+        <Route index element={<V4 />} />
+        <Route path="product" element={<V4Product />} />
+        <Route path="product-create" element={<V4ProductCreate />} />
+        <Route path="product-update/:id" element={<V4ProductUpdate />} />
       </Route>
     </Route>
   )

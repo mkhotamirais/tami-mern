@@ -9,15 +9,17 @@ export function VersionsBtn({ className }: { className?: string }) {
   const { pathname } = useLocation();
 
   const ver = [
-    { href: "/", label: "v0" },
+    { href: "/", label: "version" },
+    { href: "/v0", label: "v0" },
     { href: "/v1", label: "v1" },
     { href: "/v2", label: "v2" },
     { href: "/v3", label: "v3" },
+    { href: "/v4", label: "v4" },
   ];
 
   useEffect(() => {
     if (pathname.split("/")[1] == "") {
-      setVersion("v0");
+      setVersion("version");
     } else setVersion(pathname.split("/")[1]);
   }, [pathname]);
 

@@ -31,7 +31,9 @@ export default function V2Login() {
           window.location.href = "/v2";
         })
         .catch((err) => {
-          toast.error(err.response.data.error || err.message);
+          if (err.response) {
+            toast.error(err.response.data.error);
+          } else toast.error(err.message);
         });
     });
   };

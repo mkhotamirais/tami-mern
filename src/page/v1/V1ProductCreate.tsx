@@ -30,7 +30,9 @@ export default function V1ProductCreate() {
           navigate("/v1/product");
         })
         .catch((err) => {
-          toast.error(err.response.data.error || err.message);
+          if (err.response) {
+            toast.error(err.response.data.error);
+          } else toast.error(err.message);
         });
     });
   };

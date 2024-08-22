@@ -20,7 +20,7 @@ export const LoaderBounce = () => (
   </div>
 );
 
-export const Err = ({ children }: { children: React.ReactNode }) => {
+export const Err = ({ children, isLoginBtn = true }: { children: React.ReactNode; isLoginBtn?: boolean }) => {
   const { pathname } = useLocation();
 
   const path1 = pathname.split("/")[1];
@@ -32,9 +32,11 @@ export const Err = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-col gap-4 items-center justify-center mt-12 italic text-red-500">
       {children}
-      <Button size={"sm"}>
-        <Link to={to}>Login</Link>
-      </Button>
+      {isLoginBtn && (
+        <Button size={"sm"}>
+          <Link to={to}>Login</Link>
+        </Button>
+      )}
     </div>
   );
 };

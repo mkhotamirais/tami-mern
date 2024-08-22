@@ -4,6 +4,14 @@ import { Button } from "./ui/button";
 import { FaBars, FaXmark } from "react-icons/fa6";
 import { useBasic } from "@/hooks/useBasic";
 
+const navVer0 = [
+  { href: "/v0", label: "v0 home" },
+  { href: "/v0/todo1", label: "todo1" },
+  { href: "/v0/todo2", label: "todo2" },
+  { href: "/v0/todo3", label: "todo3" },
+  { href: "/v0/todo4", label: "todo4" },
+];
+
 const navVer1 = [
   { href: "/v1", label: "v1 home" },
   { href: "/v1/product", label: "product" },
@@ -16,12 +24,17 @@ const navVer2 = [
 ];
 
 const navVer3 = [
-  { href: "/v3", label: "v2 home" },
+  { href: "/v3", label: "v3 home" },
   { href: "/v3/product", label: "product" },
   { href: "/v3/category", label: "category" },
   { href: "/v3/tag", label: "tag" },
   { href: "/v3/kamus", label: "kamus" },
   { href: "/v3/user", label: "user" },
+];
+
+const navVer4 = [
+  { href: "/v4", label: "v4 home" },
+  { href: "/v4/product", label: "product" },
 ];
 
 export default function Navbar({ className }: { className?: string }) {
@@ -31,9 +44,11 @@ export default function Navbar({ className }: { className?: string }) {
 
   const path1: string = pathname.split("/")[1];
   let path2: string = pathname.split("/")[2];
+  if (!path2 && path1 === "v0") path2 = "v0 home";
   if (!path2 && path1 === "v1") path2 = "v1 home";
   if (!path2 && path1 === "v2") path2 = "v2 home";
   if (!path2 && path1 === "v3") path2 = "v3 home";
+  if (!path2 && path1 === "v4") path2 = "v4 home";
 
   const onNavClick = () => {
     if (nav) {
@@ -42,12 +57,16 @@ export default function Navbar({ className }: { className?: string }) {
   };
 
   useEffect(() => {
-    if (path1 == "v1") {
+    if (path1 == "v0") {
+      setNav(navVer0);
+    } else if (path1 == "v1") {
       setNav(navVer1);
     } else if (path1 == "v2") {
       setNav(navVer2);
     } else if (path1 == "v3") {
       setNav(navVer3);
+    } else if (path1 == "v4") {
+      setNav(navVer4);
     } else setNav([]);
   }, [path1]);
 
@@ -87,15 +106,13 @@ export const NavBtn = () => {
     } else openNav();
   };
 
-  if (path1 && path1 !== "v0") {
-    return (
-      <Button onClick={onClick} size={"icon"} variant={"ghost"} className="static sm:hidden">
-        <div className={`${nav ? "rotate-180" : ""} transition`}>
-          {nav ? <FaXmark className="size-5" /> : <FaBars className="size-5" />}
-        </div>
-      </Button>
-    );
-  }
+  if (!path1) return null;
 
-  return null;
+  return (
+    <Button onClick={onClick} size={"icon"} variant={"ghost"} className="static sm:hidden">
+      <div className={`${nav ? "rotate-180" : ""} transition`}>
+        {nav ? <FaXmark className="size-5" /> : <FaBars className="size-5" />}
+      </div>
+    </Button>
+  );
 };
