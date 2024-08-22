@@ -13,6 +13,7 @@ export default function Home() {
     { href: "/v1", label: "v1" },
     { href: "/v2", label: "v2" },
     { href: "/v3", label: "v3" },
+    { href: "/v4", label: "v4" },
   ];
   return (
     <>
