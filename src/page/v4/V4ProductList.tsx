@@ -7,7 +7,7 @@ import V4ProductDelDialog from "./V4ProductDelDialog";
 export default function V4ProductList({ item }: { item: V4Products }) {
   return (
     <div className="relative group border rounded-lg overflow-hidden">
-      <img src={item.imageUrl} alt="image v4" className="h-32 w-full object-cover" />
+      <img src={item.imageUrl} alt={item.name || "image v4"} className="h-32 w-full object-cover" />
       <div className="p-3">
         <h3 className="text-xl capitalize mb-2">{item.name}</h3>
         <p className="text-lg font-semibold">Rp{item.price.toLocaleString("id-ID")}</p>

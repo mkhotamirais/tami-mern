@@ -24,8 +24,12 @@ export default function V4ProductCreate() {
       formData.append("name", name);
       formData.append("price", price);
       formData.append("image", image);
+      let resultData;
+      if (image) {
+        resultData = formData;
+      } else resultData = { name, price };
       axios
-        .post(`${url}/v4/product`, formData)
+        .post(`${url}/v4/product`, resultData)
         .then((res) => {
           toast.success(res.data.message);
           navigate("/v4/product");
