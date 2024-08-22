@@ -4,7 +4,7 @@ import V3ProductList from "./V3ProductList";
 import { Button } from "@/components/ui/button";
 import { Link, useSearchParams } from "react-router-dom";
 import { useV3 } from "@/hooks/useV3";
-import { QueryFilterCat, QueryReset, QuerySearch, QuerySort } from "./V3ProductQuery";
+import { QueryFilterCat, QueryReset, QuerySearch, QuerySort, QueryTag } from "./V3ProductQuery";
 
 export default function V3Product() {
   const { data, getData, loadData, errData } = useV3();
@@ -57,9 +57,9 @@ export default function V3Product() {
         <div className="grid grid-cols-4 gap-2">
           <QuerySort />
         </div>
-        {/* <div className="my-2 flex gap-1 flex-wrap">
+        <div className="my-2 flex gap-1 flex-wrap">
           <QueryTag />
-        </div> */}
+        </div>
       </div>
 
       {content}

@@ -148,7 +148,7 @@ export function QueryTag() {
     const params = new URLSearchParams(searchParams.toString());
 
     if (tagQuery.length > 0) {
-      params.set("tag", "dfad&");
+      tagQuery.map((item) => params.set("tag", item));
     } else {
       params.delete("tag");
     }
