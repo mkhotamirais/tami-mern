@@ -10,7 +10,7 @@ export function VersionsBtn({ className }: { className?: string }) {
 
   const ver = [
     { href: "/", label: "version" },
-    { href: "/v0", label: "v0" },
+    { href: "/v0", label: "v0 Todo" },
     { href: "/v1", label: "v1" },
     { href: "/v2", label: "v2" },
     { href: "/v3", label: "v3" },
@@ -34,7 +34,9 @@ export function VersionsBtn({ className }: { className?: string }) {
       <DropdownMenuContent align="end" className="min-w-fit font-mono">
         {ver.map((item, i) => (
           <DropdownMenuItem key={i} asChild>
-            <Link to={item.href}>{item.label}</Link>
+            <Link to={item.href} className="flex justify-center">
+              {item.label}
+            </Link>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
