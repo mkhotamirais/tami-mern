@@ -22,6 +22,11 @@ const navVer11 = [
   { href: "/v1-1/product", label: "product" },
 ];
 
+const navVer12 = [
+  { href: "/v1-2", label: "v1-2 home" },
+  { href: "/v1-2/product", label: "product" },
+];
+
 const navVer2 = [
   { href: "/v2", label: "v2 home" },
   { href: "/v2/product", label: "product" },
@@ -57,6 +62,7 @@ export default function Navbar({ className }: { className?: string }) {
   if (!path2 && path1 === "v0") path2 = "v0 home";
   if (!path2 && path1 === "v1") path2 = "v1 home";
   if (!path2 && path1 === "v1-1") path2 = "v1-1 home";
+  if (!path2 && path1 === "v1-2") path2 = "v1-2 home";
   if (!path2 && path1 === "v2") path2 = "v2 home";
   if (!path2 && path1 === "v3") path2 = "v3 home";
   if (!path2 && path1 === "v4") path2 = "v4 home";
@@ -75,6 +81,8 @@ export default function Navbar({ className }: { className?: string }) {
       setNav(navVer1);
     } else if (path1 == "v1-1") {
       setNav(navVer11);
+    } else if (path1 == "v1-2") {
+      setNav(navVer12);
     } else if (path1 == "v2") {
       setNav(navVer2);
     } else if (path1 == "v3") {

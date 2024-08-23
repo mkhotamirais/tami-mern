@@ -2,12 +2,16 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import todoReducer, { InitialTodo } from "./features/todoSlice";
 import v11ProductReducer, { InitialData } from "./features/v11ProductSlice";
+import { apiSlice } from "./api/apiSlice";
 
 export const store = configureStore({
   reducer: {
     todo: todoReducer,
     v11Product: v11ProductReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export interface RootState {

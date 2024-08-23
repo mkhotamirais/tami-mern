@@ -13,6 +13,7 @@ export default function Home() {
     { href: "/v0", label: "v0 Todo" },
     { href: "/v1", label: "v1" },
     { href: "/v1-1", label: "v1-1" },
+    { href: "/v1-2", label: "v1-2" },
     { href: "/v2", label: "v2" },
     { href: "/v3", label: "v3" },
     { href: "/v4", label: "v4" },
