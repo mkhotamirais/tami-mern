@@ -26,6 +26,7 @@ export default function App() {
           </Container>
         </main>
         <Footer />
+
         <ScrollRestoration />
         <Toaster richColors position="top-center" closeButton />
       </div>
