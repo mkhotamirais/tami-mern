@@ -2,7 +2,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Badge } from "./ui/badge";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { versionMongodb } from "@/lib/constants";
+import { projectsMenu } from "@/lib/projectsMenu";
 
 export function VersionsBtn({ className }: { className?: string }) {
   const [version, setVersion] = useState("");
@@ -23,10 +23,10 @@ export function VersionsBtn({ className }: { className?: string }) {
         </Badge>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-fit font-mono">
-        {versionMongodb.map((item, i) => (
+        {projectsMenu.map((item, i) => (
           <DropdownMenuItem key={i} asChild>
             <Link to={item.href} className="flex justify-center">
-              {item.label}
+              {item.title}
             </Link>
           </DropdownMenuItem>
         ))}

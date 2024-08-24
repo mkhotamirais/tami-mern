@@ -1,18 +1,12 @@
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { LandingTitle } from "@/components/Wrapper";
-import { versionMongodb } from "@/lib/constants";
 import { Link } from "react-router-dom";
+import { Projects } from "./Projects";
 
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col space-y-10 items-center text-center justify-center h-[calc(100vh-8rem)]">
+      <div className="flex flex-col space-y-10 items-center text-center justify-center min-h-[calc(100vh-4rem)]">
         <LandingTitle
           title="Welcome to TamiMern"
           description="This Todo and MERN (MongoDB/Mysql, Express, React, Node) website consists of several versions, starting with a very basic
@@ -20,23 +14,17 @@ export default function Home() {
             the previous one by adding features that enhance and expand its functionality."
         />
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="rounded-full" size="lg">
-              Explore
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="font-mono">
-            {versionMongodb.map((item, i) => (
-              <DropdownMenuItem key={i} className="cursor-pointer py-1" asChild>
-                <Link to={item.href} className="flex justify-center">
-                  {item.label}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button className="rounded-full w-32" size="lg" asChild>
+            <Link to="#crud-versions">Explore</Link>
+          </Button>
+          <Button asChild size={"lg"} variant={"outline"} className="rounded-full w-32">
+            <Link to="doc">Doc</Link>
+          </Button>
+        </div>
+        <div></div>
       </div>
+      <Projects />
     </>
   );
 }

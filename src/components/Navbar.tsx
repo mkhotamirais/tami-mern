@@ -4,6 +4,12 @@ import { Button } from "./ui/button";
 import { FaBars, FaXmark } from "react-icons/fa6";
 import { useBasic } from "@/hooks/useBasic";
 
+const doc = [
+  { href: "/doc", label: "Doc Home" },
+  { href: "/doc/mongodb", label: "Mongodb" },
+  { href: "/doc/mysql", label: "Mysql" },
+];
+
 const navVer0 = [
   { href: "/v0-todo", label: "v0 home" },
   { href: "/v0-todo/todo1", label: "todo1" },
@@ -81,7 +87,9 @@ export default function Navbar({ className }: { className?: string }) {
   };
 
   useEffect(() => {
-    if (path1 == "v0-todo") {
+    if (path1 == "doc") {
+      setNav(doc);
+    } else if (path1 == "v0-todo") {
       setNav(navVer0);
     } else if (path1 == "v1-mongodb") {
       setNav(navVer1);
@@ -106,7 +114,7 @@ export default function Navbar({ className }: { className?: string }) {
     <nav
       className={`${className} ml-0 sm:ml-6 ${
         navBtn ? "scale-y-100" : "scale-y-0"
-      } sm:scale-y-100 origin-top transition text-[0.9rem] fixed sm:static top-16 bg-white inset-x-0 p-3 sm:p-0 border-b rounded-b sm:border-none`}
+      } sm:scale-y-100 origin-top transition text-[0.9rem] fixed sm:static top-16 bg-inherit inset-x-0 p-3 sm:p-0 border-b rounded-b sm:border-none`}
     >
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
         {nav.map((item, i) => (

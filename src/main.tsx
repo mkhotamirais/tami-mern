@@ -65,11 +65,19 @@ import V1Mysql from "./page/v1Mysql/V1Mysql.tsx";
 import V1MysqlProduct from "./page/v1Mysql/V1MysqlProduct.tsx";
 import V1MysqlProductCreate from "./page/v1Mysql/V1MysqlProductCreate.tsx";
 import V1MysqlProductUpdate from "./page/v1Mysql/V1MysqlProductUpdate.tsx";
+import Doc from "./page/doc/Doc.tsx";
+import DocMysql from "./page/doc/DocMysql.tsx";
+import DocMongodb from "./page/doc/DocMongodb.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<ErrorBoundary />}>
       <Route index element={<Home />} />
+      <Route path="doc">
+        <Route index element={<Doc />} />
+        <Route path="mysql" element={<DocMysql />} />
+        <Route path="mongodb" element={<DocMongodb />} />
+      </Route>
       <Route path="v0-todo">
         <Route index element={<V0 />} />
         <Route path="todo1" element={<Todo1 />} />
