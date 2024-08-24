@@ -68,6 +68,14 @@ import V1MysqlProductUpdate from "./page/v1Mysql/V1MysqlProductUpdate.tsx";
 import Doc from "./page/doc/Doc.tsx";
 import DocMysql from "./page/doc/DocMysql.tsx";
 import DocMongodb from "./page/doc/DocMongodb.tsx";
+import V1Sequelize from "./page/v1Sequelize/V1Sequelize.tsx";
+import V1SequelizeProduct from "./page/v1Sequelize/V1SequelizeProduct.tsx";
+import V1SequelizeProductCreate from "./page/v1Sequelize/V1SequelizeProductCreate.tsx";
+import V1SequelizeProductUpdate from "./page/v1Sequelize/V1SequelizeProductUpdate.tsx";
+import V2Sequelize from "./page/v2Sequelize/V2Sequelize.tsx";
+import V2SequelizeProduct from "./page/v2Sequelize/v2-sequelize-product/V2SequelizeProduct.tsx";
+import V2SequelizeProductCreate from "./page/v2Sequelize/v2-sequelize-product/V2SequelizeProductCreate.tsx";
+import V2SequelizeProductUpdate from "./page/v2Sequelize/v2-sequelize-product/V2SequelizeProductUpdate.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -159,6 +167,18 @@ const router = createBrowserRouter(
         <Route path="product" element={<V1MysqlProduct />} />
         <Route path="product-create" element={<V1MysqlProductCreate />} />
         <Route path="product-update/:id" element={<V1MysqlProductUpdate />} />
+      </Route>
+      <Route path="v1-sequelize">
+        <Route index element={<V1Sequelize />} />
+        <Route path="product" element={<V1SequelizeProduct />} />
+        <Route path="product-create" element={<V1SequelizeProductCreate />} />
+        <Route path="product-update/:id" element={<V1SequelizeProductUpdate />} />
+      </Route>
+      <Route path="v2-sequelize">
+        <Route index element={<V2Sequelize />} />
+        <Route path="product" element={<V2SequelizeProduct />} />
+        <Route path="product-create" element={<V2SequelizeProductCreate />} />
+        <Route path="product-update/:id" element={<V2SequelizeProductUpdate />} />
       </Route>
     </Route>
   )

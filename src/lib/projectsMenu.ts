@@ -50,13 +50,19 @@ export const projectsMenu = [
   {
     title: "v1 Mysql",
     href: "/v1-mysql",
-    description: ``,
+    description: `This version uses a REST API with MySQL, utilizing the mysql2 library, with a single product model.`,
     tools: ["react", "tailwind", "shadcn", "typescript", "mysql", "mysql2", "freesqldatabase"],
   },
   {
-    title: "v1 Mongoose",
-    href: "/v1-mongoose",
-    description: ``,
+    title: "v1 Sequelize",
+    href: "/v1-sequelize",
+    description: `This version uses a REST API with MySQL, utilizing the sequelize orm library`,
+    tools: ["react", "tailwind", "shadcn", "typescript", "mysql", "sequelize", "railway"],
+  },
+  {
+    title: "v2 Sequelize",
+    href: "/v2-sequelize",
+    description: `This version uses a REST API with MySQL, utilizing the sequelize orm library, with authentication and authorization`,
     tools: ["react", "tailwind", "shadcn", "typescript", "mysql", "sequelize", "railway"],
   },
 ];
