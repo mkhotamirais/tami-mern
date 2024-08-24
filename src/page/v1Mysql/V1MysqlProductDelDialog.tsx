@@ -11,21 +11,20 @@ import {
 import { FaTrashCan } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "sonner";
-import { url } from "@/lib/constants";
+import { urlMysql } from "@/lib/constants";
 import { useState } from "react";
-import { useV3, V3Categories } from "@/hooks/useV3";
+import { Product, useV1Mysql } from "@/hooks/useV1Mysql";
 
-export default function V3CategoryDelDialog({ item }: { item: V3Categories }) {
+export default function V1MysqlProductDelDialog({ item }: { item: Product }) {
   const [pending, setPending] = useState(false);
-  const { getCat } = useV3();
+  const { getData } = useV1Mysql();
   const onDel = async () => {
     setPending(true);
     axios
-      .create({ withCredentials: true })
-      .delete(`${url}/v3/category/${item._id}`)
+      .delete(`${urlMysql}/v1/product/${item.id}`)
       .then((res) => {
         toast.success(res.data.message);
-        getCat();
+        getData();
       })
       .catch((err) => {
         toast.error(err.response.data.error || err.message);

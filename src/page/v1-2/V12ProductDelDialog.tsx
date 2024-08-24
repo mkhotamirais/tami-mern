@@ -6,8 +6,8 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
-import { DialogTrigger } from "@radix-ui/react-dialog";
 import { FaTrashCan } from "react-icons/fa6";
 import { InitialData, useDeleteProductMutation } from "@/redux/api/v12ProductApiSlice";
 import { toast } from "sonner";

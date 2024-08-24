@@ -13,9 +13,6 @@ const versionMongodb = [
   { href: "/v4-mongodb", label: "v4 mongodb" },
   { href: "/v5-mongodb", label: "v5 mongodb" },
   { href: "/v1-mysql", label: "v1 mysql" },
-  { href: "/v1-mysql", label: "v1 mysql" },
-  { href: "/v1-mysql", label: "v1 mysql" },
-  { href: "/v1-mysql", label: "v1 mysql" },
 ];
 
 export { url, urlMysql, versionMongodb };

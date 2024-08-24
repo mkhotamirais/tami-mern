@@ -61,6 +61,10 @@ import V12 from "./page/v1-2/V12.tsx";
 import V12Product from "./page/v1-2/V12Product.tsx";
 import V12ProductCreate from "./page/v1-2/V12ProductCreate.tsx";
 import V12ProductUpdate from "./page/v1-2/V12ProductUpdate.tsx";
+import V1Mysql from "./page/v1Mysql/V1Mysql.tsx";
+import V1MysqlProduct from "./page/v1Mysql/V1MysqlProduct.tsx";
+import V1MysqlProductCreate from "./page/v1Mysql/V1MysqlProductCreate.tsx";
+import V1MysqlProductUpdate from "./page/v1Mysql/V1MysqlProductUpdate.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -141,6 +145,12 @@ const router = createBrowserRouter(
         <Route path="product" element={<V5Product />} />
         <Route path="product-create" element={<V5ProductCreate />} />
         <Route path="product-update/:id" element={<V5ProductUpdate />} />
+      </Route>
+      <Route path="v1-mysql">
+        <Route index element={<V1Mysql />} />
+        <Route path="product" element={<V1MysqlProduct />} />
+        <Route path="product-create" element={<V1MysqlProductCreate />} />
+        <Route path="product-update/:id" element={<V1MysqlProductUpdate />} />
       </Route>
     </Route>
   )

@@ -6,9 +6,9 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useV1, V1Products } from "@/hooks/useV1";
-import { DialogTrigger } from "@radix-ui/react-dialog";
 import { FaTrashCan } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "sonner";
