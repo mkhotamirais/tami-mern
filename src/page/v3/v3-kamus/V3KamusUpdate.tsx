@@ -20,7 +20,7 @@ export default function V3KamusUpdate() {
   const [reference, setReference] = useState<Reference[] | []>([]);
   const [refName, setRefName] = useState("");
   const [refLink, setRefLink] = useState("");
-  const [load, setLoad] = useState(false);
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -59,24 +59,26 @@ export default function V3KamusUpdate() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setPending(true);
     if (refName || refName !== "" || refLink || refLink !== "") {
       toast.error("You are filling in the reference input");
       return;
     }
     const data = { name, description, reference };
     await axios
+      .create({ withCredentials: true })
       .patch(`${url}/v3/kamus/${id}`, data)
       .then((res) => {
         toast.success(res.data.message);
         getKamus();
-        navigate("/v3/kamus");
+        navigate("/v3-mongodb/kamus");
       })
       .catch((err) => {
         if (err.response) {
           toast.error(err.response.data.error);
         } else toast.error(err.message);
       })
-      .finally(() => setLoad(false));
+      .finally(() => setPending(false));
   };
 
   return (
@@ -86,6 +88,7 @@ export default function V3KamusUpdate() {
         <div>
           <Label htmlFor="name">Name</Label>
           <Input
+            disabled={pending}
             type="text"
             id="name"
             name="name"
@@ -97,6 +100,7 @@ export default function V3KamusUpdate() {
         <div>
           <Label htmlFor="description">Description</Label>
           <Textarea
+            disabled={pending}
             id="description"
             name="description"
             placeholder="description"
@@ -109,6 +113,7 @@ export default function V3KamusUpdate() {
           <div className="border rounded p-2">
             <Label htmlFor="refName">Reference Name</Label>
             <Input
+              disabled={pending}
               id="refName"
               placeholder="Reference Name"
               value={refName}
@@ -116,12 +121,19 @@ export default function V3KamusUpdate() {
             />
             <Label htmlFor="refLink">Reference Link</Label>
             <Input
+              disabled={pending}
               id="refLink"
               placeholder="Reference Link"
               value={refLink}
               onChange={(e) => setRefLink(e.target.value)}
             />
-            <Button size="sm" type="button" onClick={handleAddRef} className="text-white p-1 mt-2 px-2 text-sm">
+            <Button
+              disabled={pending}
+              size="sm"
+              type="button"
+              onClick={handleAddRef}
+              className="text-white p-1 mt-2 px-2 text-sm"
+            >
               Add Reference
             </Button>
             {reference.map((item, i) => (
@@ -131,6 +143,7 @@ export default function V3KamusUpdate() {
                   <div>Link : {item?.refLink}</div>
                 </div>
                 <Button
+                  disabled={pending}
                   size="icon"
                   variant={"outline"}
                   onClick={() => handleDeleteRef(item?.refName)}
@@ -143,7 +156,9 @@ export default function V3KamusUpdate() {
           </div>
         </div>
 
-        <Button type="submit">{load ? "Loading" : "Submit"}</Button>
+        <Button disabled={pending} type="submit">
+          {pending ? "Loading.." : "Save"}
+        </Button>
       </form>
     </div>
   );

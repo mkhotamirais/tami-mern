@@ -10,7 +10,7 @@ export default function V4() {
         description="The forth version manages a single product model that have images, but it's only work in local"
       />
       <Button asChild className="rounded-full" size="lg">
-        <Link to="/v4/product">Product</Link>
+        <Link to="/v4-mongodb/product">Product</Link>
       </Button>
     </div>
   );

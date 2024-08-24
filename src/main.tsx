@@ -66,32 +66,32 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<ErrorBoundary />}>
       <Route index element={<Home />} />
-      <Route path="v0">
+      <Route path="v0-todo">
         <Route index element={<V0 />} />
         <Route path="todo1" element={<Todo1 />} />
         <Route path="todo2" element={<Todo2 />} />
         <Route path="todo3" element={<Todo3 />} />
         <Route path="todo4" element={<Todo4 />} />
       </Route>
-      <Route path="v1">
+      <Route path="v1-mongodb">
         <Route index element={<V1 />} />
         <Route path="product" element={<V1Product />} />
         <Route path="product-create" element={<V1ProductCreate />} />
         <Route path="product-update/:id" element={<V1ProductUpdate />} />
       </Route>
-      <Route path="v1-1">
+      <Route path="v1-1-mongodb">
         <Route index element={<V11 />} />
         <Route path="product" element={<V11Product />} />
         <Route path="product-create" element={<V11ProductCreate />} />
         <Route path="product-update/:id" element={<V11ProductUpdate />} />
       </Route>
-      <Route path="v1-2">
+      <Route path="v1-2-mongodb">
         <Route index element={<V12 />} />
         <Route path="product" element={<V12Product />} />
         <Route path="product-create" element={<V12ProductCreate />} />
         <Route path="product-update/:id" element={<V12ProductUpdate />} />
       </Route>
-      <Route path="v2">
+      <Route path="v2-mongodb">
         <Route index element={<V2 />} />
         <Route path="me" element={<V2Me />} />
         <Route element={<V2IsLogin />}>
@@ -106,7 +106,7 @@ const router = createBrowserRouter(
           <Route path="product-update/:id" element={<V2ProductUpdate />} />
         </Route>
       </Route>
-      <Route path="v3">
+      <Route path="v3-mongodb">
         <Route index element={<V3 />} />
         <Route path="me" element={<V3Me />} />
         <Route element={<V3IsLogin />}>
@@ -130,13 +130,13 @@ const router = createBrowserRouter(
           <Route path="kamus-update/:id" element={<V3KamusUpdate />} />
         </Route>
       </Route>
-      <Route path="v4">
+      <Route path="v4-mongodb">
         <Route index element={<V4 />} />
         <Route path="product" element={<V4Product />} />
         <Route path="product-create" element={<V4ProductCreate />} />
         <Route path="product-update/:id" element={<V4ProductUpdate />} />
       </Route>
-      <Route path="v5">
+      <Route path="v5-mongodb">
         <Route index element={<V5 />} />
         <Route path="product" element={<V5Product />} />
         <Route path="product-create" element={<V5ProductCreate />} />

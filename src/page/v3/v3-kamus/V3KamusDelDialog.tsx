@@ -13,11 +13,15 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useV3, V3Kamuss } from "@/hooks/useV3";
 import { url } from "@/lib/constants";
+import { useState } from "react";
 
 export default function V3KamusDelDialog({ item }: { item: V3Kamuss }) {
   const { getKamus } = useV3();
+  const [pending, setPending] = useState(false);
   const onDelete = async () => {
+    setPending(true);
     await axios
+      .create({ withCredentials: true })
       .delete(`${url}/v3/kamus/${item._id}`)
       .then((res) => {
         toast.success(res.data.message);
@@ -27,7 +31,8 @@ export default function V3KamusDelDialog({ item }: { item: V3Kamuss }) {
         if (err.response) {
           toast.error(err.response.data.error);
         } else toast.error(err.message);
-      });
+      })
+      .finally(() => setPending(false));
   };
 
   return (
@@ -42,11 +47,9 @@ export default function V3KamusDelDialog({ item }: { item: V3Kamuss }) {
           <DialogTitle>Delete {item.name}, are you sure?</DialogTitle>
           <DialogDescription>This action cannot be undone!</DialogDescription>
           <div className="space-x-2">
-            <DialogClose asChild>
-              <Button onClick={onDelete} size="sm" variant={"destructive"}>
-                Delete
-              </Button>
-            </DialogClose>
+            <Button disabled={pending} onClick={onDelete} size="sm" variant={"destructive"}>
+              {pending ? "Loading.." : "Delete"}
+            </Button>
             <DialogClose asChild>
               <Button size="sm" variant={"outline"}>
                 Cancel

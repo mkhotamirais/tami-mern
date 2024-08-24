@@ -10,20 +10,24 @@ import {
 } from "@/components/ui/dialog";
 import { url } from "@/lib/constants";
 import axios from "axios";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function V2MeDelDialog() {
+  const [pending, setPending] = useState(false);
   const onDelete = () => {
+    setPending(true);
     axios
       .create({ withCredentials: true })
       .delete(`${url}/v2/me`)
       .then((res) => {
         toast.success(res.data.message);
-        window.location.href = "/v2/login";
+        window.location.href = "/v2-mongodb/login";
       })
       .catch((err) => {
         toast.error(err.response.data.error || err.message);
-      });
+      })
+      .finally(() => setPending(false));
   };
 
   return (
@@ -38,11 +42,9 @@ export default function V2MeDelDialog() {
           <DialogTitle>Delete your account, Are you sure?</DialogTitle>
           <DialogDescription>This action cannot be undone.</DialogDescription>
           <div className="space-x-1">
-            <DialogClose asChild>
-              <Button onClick={onDelete} variant={"destructive"} size={"sm"}>
-                Delete
-              </Button>
-            </DialogClose>
+            <Button disabled={pending} onClick={onDelete} variant={"destructive"} size={"sm"}>
+              {pending ? "Loading.." : "Delete"}
+            </Button>
             <DialogClose asChild>
               <Button variant={"outline"} size={"sm"}>
                 Cancel

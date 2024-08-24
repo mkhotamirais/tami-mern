@@ -38,11 +38,9 @@ export default function V12ProductDelDialog({ item }: { item: InitialData }) {
           <DialogTitle>Delete {item?.name}, are you sure?</DialogTitle>
           <DialogDescription>This action cannot be undone!</DialogDescription>
           <div className="space-x-1">
-            <DialogClose asChild>
-              <Button disabled={pending} onClick={onDel} size="sm" variant="destructive">
-                Delete
-              </Button>
-            </DialogClose>
+            <Button disabled={pending} onClick={onDel} size="sm" variant="destructive">
+              {pending ? "Loading.." : "Delete"}
+            </Button>
             <DialogClose asChild>
               <Button disabled={pending} size="sm" variant="outline">
                 Cancel

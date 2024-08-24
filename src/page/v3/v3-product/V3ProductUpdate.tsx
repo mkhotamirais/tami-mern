@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -20,7 +20,7 @@ type CreateProductForm = z.infer<typeof ProductSchema>;
 
 export default function V3ProductUpdate() {
   const { id } = useParams();
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const { singleData, getDataById, cat, tag, getCat, getTag, loadCat, loadTag, errCat, errTag } = useV3();
 
   const form = useForm<CreateProductForm>({
@@ -30,18 +30,18 @@ export default function V3ProductUpdate() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: CreateProductForm) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .patch(`${url}/v3/product/${id}`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v3/product");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .patch(`${url}/v3/product/${id}`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v3-mongodb/product");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   useEffect(() => {
@@ -130,7 +130,7 @@ export default function V3ProductUpdate() {
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <FormControl>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select disabled={pending} onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select category" />
@@ -155,32 +155,35 @@ export default function V3ProductUpdate() {
             render={() => (
               <FormItem>
                 <FormLabel>Tag</FormLabel>
-                {tag.map((item) => (
-                  <FormField
-                    key={item?._id}
-                    control={form.control}
-                    name="tag"
-                    render={({ field }) => {
-                      return (
-                        <FormItem key={item?._id} className="flex flex-row items-start space-x-3 space-y-0">
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(item?._id)}
-                              onCheckedChange={(checked) => {
-                                if (checked) {
-                                  field.onChange([...field.value, item?._id]);
-                                } else {
-                                  field.onChange(field.value?.filter((value) => value !== item?._id));
-                                }
-                              }}
-                            />
-                          </FormControl>
-                          <FormLabel className="font-normal">{item?.name}</FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
+                <div className="flex flex-wrap gap-6 border p-3 rounded-lg">
+                  {tag.map((item) => (
+                    <FormField
+                      key={item?._id}
+                      control={form.control}
+                      name="tag"
+                      render={({ field }) => {
+                        return (
+                          <FormItem key={item?._id} className="flex flex-row items-start space-x-3 space-y-0">
+                            <FormControl>
+                              <Checkbox
+                                disabled={pending}
+                                checked={field.value?.includes(item?._id)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    field.onChange([...field.value, item?._id]);
+                                  } else {
+                                    field.onChange(field.value?.filter((value) => value !== item?._id));
+                                  }
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="font-normal">{item?.name}</FormLabel>
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  ))}
+                </div>
                 <FormMessage />
               </FormItem>
             )}

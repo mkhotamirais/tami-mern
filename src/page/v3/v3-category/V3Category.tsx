@@ -38,7 +38,7 @@ export default function V3Category() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold my-3">Category List</h2>
         <Button size={"sm"} asChild>
-          <Link to="/v3/category-create">Add New</Link>
+          <Link to="/v3-mongodb/category-create">Add New</Link>
         </Button>
       </div>
 

@@ -13,7 +13,7 @@ export default function V2() {
           User and Product. Only admins can view the User model, while the Product model is accessible to everyone."
       />
       <Button asChild className="rounded-full" size="lg">
-        <Link to="/v2/product">Product</Link>
+        <Link to="/v2-mongodb/product">Product</Link>
       </Button>
     </div>
   );

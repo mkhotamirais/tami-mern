@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { useV2 } from "@/hooks/useV2";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +20,7 @@ type UpdateUserForm = z.infer<typeof UpdateUserSchema>;
 export default function V2UserUpdate() {
   const { id } = useParams();
   const { getUser, user, loadUser, errUser } = useV2();
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const [changePass, setChangePass] = useState(false);
   const navigate = useNavigate();
 
@@ -43,18 +43,18 @@ export default function V2UserUpdate() {
   }, [user, form]);
 
   const onSubmit = (values: UpdateUserForm) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .patch(`${url}/v2/user/${id}`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v2/user");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .patch(`${url}/v2/user/${id}`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v2-mongodb/user");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   let content;
@@ -90,7 +90,13 @@ export default function V2UserUpdate() {
               </FormItem>
             )}
           />
-          <Button onClick={() => setChangePass((prev) => !prev)} type="button" variant={"outline"} size={"sm"}>
+          <Button
+            disabled={pending}
+            onClick={() => setChangePass((prev) => !prev)}
+            type="button"
+            variant={"outline"}
+            size={"sm"}
+          >
             Change Password
           </Button>
           <div className={`${changePass ? "block" : "hidden"} transition space-y-3`}>
@@ -143,7 +149,7 @@ export default function V2UserUpdate() {
             )}
           />
           <Button disabled={pending} type="submit">
-            Submit
+            {pending ? "Loading.." : "Submit"}
           </Button>
         </form>
       </Form>

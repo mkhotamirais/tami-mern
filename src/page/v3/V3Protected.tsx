@@ -18,7 +18,7 @@ export function V3IsLogin() {
 
   useEffect(() => {
     if (me) {
-      navigate("/v3");
+      navigate("/v3-mongodb");
     }
   }, [me, navigate]);
 

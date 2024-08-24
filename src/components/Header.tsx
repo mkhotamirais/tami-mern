@@ -11,12 +11,12 @@ export function Header() {
         <div className="h-full flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Logo />
-            <VersionsBtn className="block sm:hidden" />
+            <VersionsBtn className="flex sm:hidden" />
             <Navbar />
           </div>
           <div className="flex space-x-2 items-center">
             <AuthBtn />
-            <VersionsBtn className="hidden sm:block" />
+            <VersionsBtn className="hidden sm:flex" />
             <NavBtn />
           </div>
         </div>

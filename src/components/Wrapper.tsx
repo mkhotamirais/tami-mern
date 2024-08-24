@@ -10,7 +10,7 @@ export const Container = ({ children }: { children: React.ReactNode }) => (
 export const LandingTitle = ({ title, description }: { title: string; description: string }) => (
   <div className="leading-relaxed">
     <h1 className="text-3xl font-bold mb-2 uppercase">{title}</h1>
-    <p className="text-muted-foreground">{description}</p>
+    <p className="text-muted-foreground max-w-2xl">{description}</p>
   </div>
 );
 
@@ -26,8 +26,8 @@ export const Err = ({ children, isLoginBtn = true }: { children: React.ReactNode
   const path1 = pathname.split("/")[1];
 
   let to: string = "";
-  if (path1 === "v2") {
-    to = "/v2/login";
+  if (path1 === "v2-mongodb") {
+    to = "/v2-mongodb/login";
   }
   return (
     <div className="flex flex-col gap-4 items-center justify-center mt-12 italic text-red-500">

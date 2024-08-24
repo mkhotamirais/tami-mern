@@ -26,7 +26,7 @@ export default function V3KamusList({ item }: { item: V3Kamuss }) {
       </div>
       <div className="scale-0 group-hover:scale-100 transition absolute right-0 top-0 p-1 rounded-lg flex gap-1">
         <Button size="sm" className="rounded-full">
-          <Link to={`/v3/kamus-update/${item._id}`}>
+          <Link to={`/v3-mongodb/kamus-update/${item._id}`}>
             <FaPenToSquare />
           </Link>
         </Button>

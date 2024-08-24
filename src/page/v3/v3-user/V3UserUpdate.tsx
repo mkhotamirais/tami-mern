@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { useV3 } from "@/hooks/useV3";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +20,7 @@ type UpdateUserForm = z.infer<typeof UpdateUserSchema>;
 export default function V3UserUpdate() {
   const { id } = useParams();
   const { getUser, user, loadUser, errUser } = useV3();
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const [changePass, setChangePass] = useState(false);
   const navigate = useNavigate();
 
@@ -43,18 +43,18 @@ export default function V3UserUpdate() {
   }, [user, form]);
 
   const onSubmit = (values: UpdateUserForm) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .patch(`${url}/v3/user/${id}`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v3/user");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .patch(`${url}/v3/user/${id}`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v3-mongodb/user");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   let content;
@@ -90,7 +90,13 @@ export default function V3UserUpdate() {
               </FormItem>
             )}
           />
-          <Button onClick={() => setChangePass((prev) => !prev)} type="button" variant={"outline"} size={"sm"}>
+          <Button
+            disabled={pending}
+            onClick={() => setChangePass((prev) => !prev)}
+            type="button"
+            variant={"outline"}
+            size={"sm"}
+          >
             Change Password
           </Button>
           <div className={`${changePass ? "block" : "hidden"} transition space-y-3`}>
@@ -127,7 +133,12 @@ export default function V3UserUpdate() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Role</FormLabel>
-                <Select value={field.value} onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  disabled={pending}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Choose Role" />
@@ -143,7 +154,7 @@ export default function V3UserUpdate() {
             )}
           />
           <Button disabled={pending} type="submit">
-            Submit
+            {pending ? "Loading.." : "Save"}
           </Button>
         </form>
       </Form>

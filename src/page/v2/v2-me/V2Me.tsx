@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 
 import { Err, LoaderBounce } from "@/components/Wrapper";
 import { useV2 } from "@/hooks/useV2";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import { UpdateUserSchema } from "../v2Schemas";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -21,7 +21,7 @@ type UpdateMeForm = z.infer<typeof UpdateUserSchema>;
 export default function V2Me() {
   const { me, getMe, loadMe, errMe } = useV2();
   const [changePass, setChangePass] = useState(false);
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     getMe();
@@ -46,17 +46,17 @@ export default function V2Me() {
   ];
 
   const onSubmit = (values: UpdateMeForm) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .patch(`${url}/v2/me`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .patch(`${url}/v2/me`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   if (loadMe) return <LoaderBounce />;
@@ -154,7 +154,9 @@ export default function V2Me() {
             )}
           />
           <div className="flex gap-1 justify-between items-center">
-            <Button type="submit">Save</Button>
+            <Button disabled={pending} type="submit">
+              {pending ? "Loading.." : "Save"}
+            </Button>
             <V2MeDelDialog />
           </div>
         </form>

@@ -14,7 +14,7 @@ export default function V3() {
       />
 
       <Button asChild className="rounded-full" size="lg">
-        <Link to="/v3/product">Product</Link>
+        <Link to="/v3-mongodb/product">Product</Link>
       </Button>
     </div>
   );

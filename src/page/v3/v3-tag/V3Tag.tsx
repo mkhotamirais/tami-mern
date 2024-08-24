@@ -38,7 +38,7 @@ export default function V3Tag() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold my-3">Tag List</h2>
         <Button size={"sm"} asChild>
-          <Link to="/v3/tag-create">Add New</Link>
+          <Link to="/v3-mongodb/tag-create">Add New</Link>
         </Button>
       </div>
 

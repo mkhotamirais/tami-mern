@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Trash } from "lucide-react";
-import { FormEvent, useEffect, useState, useTransition } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { url } from "@/lib/constants";
@@ -16,7 +16,7 @@ export default function V5ProductUpdate() {
   const [name, setName] = useState("");
   const [image, setImage] = useState<File | string>("");
   const [preview, setPreview] = useState("");
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -35,22 +35,22 @@ export default function V5ProductUpdate() {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    startTransition(() => {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("image", image);
-      axios
-        .patch(`${url}/v5/product/${id}`, formData)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v5/product");
-        })
-        .catch((err) => {
-          if (err.response) {
-            toast.error(err.response.data.error);
-          } else toast.error(err.message);
-        });
-    });
+    setPending(true);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("image", image);
+    axios
+      .patch(`${url}/v5/product/${id}`, formData)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v5-mongodb/product");
+      })
+      .catch((err) => {
+        if (err.response) {
+          toast.error(err.response.data.error);
+        } else toast.error(err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   return (

@@ -5,7 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { RegisterSchema } from "../v3Schemas";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { url } from "@/lib/constants";
 import { toast } from "sonner";
@@ -14,7 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 type RegisterFormSchema = z.infer<typeof RegisterSchema>;
 
 export default function V3Register() {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const navigate = useNavigate();
 
   const form = useForm<RegisterFormSchema>({
@@ -23,17 +23,17 @@ export default function V3Register() {
   });
 
   const onSubmit = async (values: RegisterFormSchema) => {
-    startTransition(() => {
-      axios
-        .post(`${url}/v3/signup`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v3/login");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .post(`${url}/v3/signup`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v3-mongodb/login");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   return (

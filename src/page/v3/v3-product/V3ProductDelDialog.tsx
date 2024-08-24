@@ -12,25 +12,25 @@ import { FaTrashCan } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "sonner";
 import { url } from "@/lib/constants";
-import { useTransition } from "react";
+import { useState } from "react";
 import { useV3, V3Products } from "@/hooks/useV3";
 
 export default function V3ProductDelDialog({ item }: { item: V3Products }) {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const { getData } = useV3();
   const onDel = async () => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .delete(`${url}/v3/product/${item._id}`)
-        .then((res) => {
-          toast.success(res.data.message);
-          getData();
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .delete(`${url}/v3/product/${item._id}`)
+      .then((res) => {
+        toast.success(res.data.message);
+        getData();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   return (
@@ -45,11 +45,9 @@ export default function V3ProductDelDialog({ item }: { item: V3Products }) {
           <DialogTitle>Delete {item?.name}, are you sure?</DialogTitle>
           <DialogDescription>This action cannot be undone!</DialogDescription>
           <div className="space-x-1">
-            <DialogClose asChild>
-              <Button disabled={pending} onClick={onDel} size="sm" variant="destructive">
-                Delete
-              </Button>
-            </DialogClose>
+            <Button disabled={pending} onClick={onDel} size="sm" variant="destructive">
+              {pending ? "Loading.." : "Delete"}
+            </Button>
             <DialogClose asChild>
               <Button disabled={pending} size="sm" variant="outline">
                 Cancel

@@ -18,7 +18,7 @@ export function V2IsLogin() {
 
   useEffect(() => {
     if (me) {
-      navigate("/v2");
+      navigate("/v2-mongodb");
     }
   }, [me, navigate]);
 

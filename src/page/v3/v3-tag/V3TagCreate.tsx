@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useTransition } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -14,7 +14,7 @@ import { TagSchema } from "../v3Schemas";
 type CreateTagForm = z.infer<typeof TagSchema>;
 
 export default function V3TagCreate() {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const form = useForm<CreateTagForm>({
     resolver: zodResolver(TagSchema),
     defaultValues: { name: "" },
@@ -22,18 +22,18 @@ export default function V3TagCreate() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: CreateTagForm) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .post(`${url}/v3/tag`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v3/tag");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .post(`${url}/v3/tag`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v3-mongodb/tag");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   return (

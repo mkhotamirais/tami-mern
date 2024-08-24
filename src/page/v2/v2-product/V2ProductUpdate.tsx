@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -18,7 +18,7 @@ type CreateProductForm = z.infer<typeof ProductSchema>;
 export default function V2ProductUpdate() {
   const { id } = useParams();
   const { singleData, getDataById, loadSingleData, errSingleData } = useV2();
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
   const form = useForm<CreateProductForm>({
     resolver: zodResolver(ProductSchema),
@@ -40,18 +40,18 @@ export default function V2ProductUpdate() {
   }, [singleData, form]);
 
   const onSubmit = async (values: CreateProductForm) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .patch(`${url}/v2/product/${id}`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v2/product");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .patch(`${url}/v2/product/${id}`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v2-mongodb/product");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   let content;

@@ -24,7 +24,7 @@ export default function V12ProductCreate() {
       .unwrap()
       .then((res) => {
         toast.success(res.message);
-        navigate("/v1-2/product");
+        navigate("/v1-2-mongodb/product");
       })
       .catch((err) => {
         toast.error(err.data.error);

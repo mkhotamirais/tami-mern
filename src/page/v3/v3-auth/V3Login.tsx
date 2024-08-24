@@ -5,7 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { LoginSchema } from "../v3Schemas";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { url } from "@/lib/constants";
 import { toast } from "sonner";
@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 type LoginFormSchema = z.infer<typeof LoginSchema>;
 
 export default function V3Login() {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(LoginSchema),
@@ -22,18 +22,18 @@ export default function V3Login() {
   });
 
   const onSubmit = async (values: LoginFormSchema) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .patch(`${url}/v3/signin`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          window.location.href = "/v3";
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .patch(`${url}/v3/signin`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        window.location.href = "/v3-mongodb";
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
   return (
     <div className="max-w-md border rounded-xl p-3 mx-auto mt-8">
@@ -84,7 +84,7 @@ export default function V3Login() {
         </form>
         <div className="flex justify-center mt-4">
           <Button variant={"link"} asChild>
-            <Link to="/v3/register">Do not have an account?</Link>
+            <Link to="/v3-mongodb/register">Do not have an account?</Link>
           </Button>
         </div>
       </Form>

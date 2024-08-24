@@ -20,9 +20,9 @@ export default function AuthBtn() {
   const path1 = pathname.split("/")[1];
 
   let content: React.ReactNode | null;
-  if (path1 === "v2") {
+  if (path1 === "v2-mongodb") {
     content = <AuthV2Btn />;
-  } else if (path1 === "v3") {
+  } else if (path1 === "v3-mongodb") {
     content = <AuthV3Btn />;
   } else {
     content = null;
@@ -40,7 +40,7 @@ function AuthV2Btn() {
       .patch(`${url}/v2/signout`)
       .then((res) => {
         toast.success(res.data.message);
-        window.location.href = "/v2/login";
+        window.location.href = "/v2-mongodb/login";
       })
       .catch((err) => {
         toast.error(err.response.data.error || err.message);
@@ -52,7 +52,7 @@ function AuthV2Btn() {
     content = (
       <>
         <DropdownMenuItem asChild>
-          <Link to="/v2/me">Account</Link>
+          <Link to="/v2-mongodb/me">Account</Link>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
       </>
@@ -61,10 +61,10 @@ function AuthV2Btn() {
     content = (
       <>
         <DropdownMenuItem asChild>
-          <Link to="/v2/login">Login</Link>
+          <Link to="/v2-mongodb/login">Login</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/v2/register">Register</Link>
+          <Link to="/v2-mongodb/register">Register</Link>
         </DropdownMenuItem>
       </>
     );
@@ -91,7 +91,7 @@ function AuthV3Btn() {
       .patch(`${url}/v3/signout`)
       .then((res) => {
         toast.success(res.data.message);
-        window.location.href = "/v3/login";
+        window.location.href = "/v3-mongodb/login";
       })
       .catch((err) => {
         toast.error(err.response.data.error || err.message);
@@ -103,7 +103,7 @@ function AuthV3Btn() {
     content = (
       <>
         <DropdownMenuItem asChild>
-          <Link to="/v3/me">Account</Link>
+          <Link to="/v3-mongodb/me">Account</Link>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
       </>
@@ -112,10 +112,10 @@ function AuthV3Btn() {
     content = (
       <>
         <DropdownMenuItem asChild>
-          <Link to="/v3/login">Login</Link>
+          <Link to="/v3-mongodb/login">Login</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/v3/register">Register</Link>
+          <Link to="/v3-mongodb/register">Register</Link>
         </DropdownMenuItem>
       </>
     );

@@ -13,23 +13,23 @@ import { FaTrashCan } from "react-icons/fa6";
 import axios from "axios";
 import { toast } from "sonner";
 import { url } from "@/lib/constants";
-import { useTransition } from "react";
+import { useState } from "react";
 
 export default function V1ProductDelDialog({ item }: { item: V1Products }) {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const { getData } = useV1();
   const onDel = async () => {
-    startTransition(() => {
-      axios
-        .delete(`${url}/v1/product/${item._id}`)
-        .then((res) => {
-          toast.success(res.data.message);
-          getData();
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .delete(`${url}/v1/product/${item._id}`)
+      .then((res) => {
+        toast.success(res.data.message);
+        getData();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   return (
@@ -44,11 +44,9 @@ export default function V1ProductDelDialog({ item }: { item: V1Products }) {
           <DialogTitle>Delete {item?.name}, are you sure?</DialogTitle>
           <DialogDescription>This action cannot be undone!</DialogDescription>
           <div className="space-x-1">
-            <DialogClose asChild>
-              <Button disabled={pending} onClick={onDel} size="sm" variant="destructive">
-                Delete
-              </Button>
-            </DialogClose>
+            <Button disabled={pending} onClick={onDel} size="sm" variant="destructive">
+              {pending ? "Loading.." : "Delete"}
+            </Button>
             <DialogClose asChild>
               <Button disabled={pending} size="sm" variant="outline">
                 Cancel

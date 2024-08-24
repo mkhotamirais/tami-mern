@@ -10,7 +10,7 @@ export default function V5() {
         description="The fifth version manages a single product model that have images that saved in cloudinary"
       />
       <Button asChild className="rounded-full" size="lg">
-        <Link to="/v5/product">Product</Link>
+        <Link to="/v5-mongodb/product">Product</Link>
       </Button>
     </div>
   );

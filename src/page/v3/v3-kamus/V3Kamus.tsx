@@ -38,7 +38,7 @@ export default function V3Kamus() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold my-3">Kamus List</h2>
         <Button size={"sm"} asChild>
-          <Link to="/v3/kamus-create">Add New</Link>
+          <Link to="/v3-mongodb/kamus-create">Add New</Link>
         </Button>
       </div>
 

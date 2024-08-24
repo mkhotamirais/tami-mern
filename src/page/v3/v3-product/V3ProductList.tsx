@@ -26,7 +26,7 @@ export default function V3ProductList({ item }: { item: V3Products }) {
       </CardFooter>
       <div className="z-10 absolute top-0 p-2 right-0 space-x-1 scale-0 group-hover:scale-100 transition">
         <Button size={"sm"} variant={"outline"} asChild>
-          <Link to={`/v3/product-update/${item._id}`}>
+          <Link to={`/v3-mongodb/product-update/${item._id}`}>
             <FaPenToSquare className="text-green-500" />
           </Link>
         </Button>

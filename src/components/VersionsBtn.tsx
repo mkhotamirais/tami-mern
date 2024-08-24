@@ -2,23 +2,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Badge } from "./ui/badge";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { versionMongodb } from "@/lib/constants";
 
 export function VersionsBtn({ className }: { className?: string }) {
   const [version, setVersion] = useState("");
 
   const { pathname } = useLocation();
-
-  const ver = [
-    { href: "/", label: "version" },
-    { href: "/v0", label: "v0 Todo" },
-    { href: "/v1", label: "v1" },
-    { href: "/v1-1", label: "v1.1" },
-    { href: "/v1-2", label: "v1.2" },
-    { href: "/v2", label: "v2" },
-    { href: "/v3", label: "v3" },
-    { href: "/v4", label: "v4" },
-    { href: "/v5", label: "v5" },
-  ];
 
   useEffect(() => {
     if (pathname.split("/")[1] == "") {
@@ -34,7 +23,7 @@ export function VersionsBtn({ className }: { className?: string }) {
         </Badge>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-fit font-mono">
-        {ver.map((item, i) => (
+        {versionMongodb.map((item, i) => (
           <DropdownMenuItem key={i} asChild>
             <Link to={item.href} className="flex justify-center">
               {item.label}

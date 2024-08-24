@@ -10,7 +10,7 @@ export default function V12() {
         description="The first version only manages a single product model with basic items and using redux rtk query as a state management"
       />
       <Button asChild className="rounded-full" size="lg">
-        <Link to="/v1-2/product">Product</Link>
+        <Link to="/v1-2-mongodb/product">Product</Link>
       </Button>
     </div>
   );

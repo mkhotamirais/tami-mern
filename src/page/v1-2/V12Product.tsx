@@ -37,7 +37,7 @@ export default function V12Product() {
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-semibold my-3">Product List</h2>
         <Button size={"sm"} asChild>
-          <Link to="/v1-2/product-create">Add New</Link>
+          <Link to="/v1-2-mongodb/product-create">Add New</Link>
         </Button>
       </div>
 

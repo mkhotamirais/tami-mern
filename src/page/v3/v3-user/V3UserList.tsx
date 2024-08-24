@@ -17,7 +17,7 @@ export default function V3UserList({ item }: { item: V3Users }) {
       </div>
       <div className="scale-0 group-hover:scale-100 origin-right transition absolute flex gap-1 right-0 top-1/2 -translate-y-1/2 p-2">
         <Button size={"sm"} variant={"outline"} asChild>
-          <Link to={`/v3/user-update/${item._id}`}>
+          <Link to={`/v3-mongodb/user-update/${item._id}`}>
             <FaPenToSquare className="text-green-500" />
           </Link>
         </Button>

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useTransition } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -14,7 +14,7 @@ import { ProductSchema } from "../v2Schemas";
 type CreateProductForm = z.infer<typeof ProductSchema>;
 
 export default function V2ProductCreate() {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const form = useForm<CreateProductForm>({
     resolver: zodResolver(ProductSchema),
     defaultValues: { name: "", price: "" },
@@ -22,18 +22,18 @@ export default function V2ProductCreate() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: CreateProductForm) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .post(`${url}/v2/product`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v2/product");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .post(`${url}/v2/product`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v2-mongodb/product");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   return (

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -19,7 +19,7 @@ import { Err, LoaderBounce } from "@/components/Wrapper";
 type CreateProductForm = z.infer<typeof ProductSchema>;
 
 export default function V3ProductCreate() {
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const { cat, tag, getCat, getTag, loadCat, loadTag, errCat, errTag } = useV3();
 
   const form = useForm<CreateProductForm>({
@@ -29,18 +29,18 @@ export default function V3ProductCreate() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: CreateProductForm) => {
-    startTransition(() => {
-      axios
-        .create({ withCredentials: true })
-        .post(`${url}/v3/product`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v3/product");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .create({ withCredentials: true })
+      .post(`${url}/v3/product`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v3-mongodb/product");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { ProductSchema } from "./v11Schemas";
 import { Input } from "@/components/ui/input";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -19,7 +19,7 @@ type UpdateProductForm = z.infer<typeof ProductSchema>;
 
 export default function V11ProductUpdate() {
   const { id } = useParams();
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
   const { singleData, status, error } = useSelector((state: RootV11Product) => state.v11Product);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -45,17 +45,17 @@ export default function V11ProductUpdate() {
   }, [singleData, form]);
 
   const onSubmit = async (values: UpdateProductForm) => {
-    startTransition(() => {
-      axios
-        .patch(`${url}/v1/product/${id}`, values)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v1-1/product");
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error || err.message);
-        });
-    });
+    setPending(true);
+    axios
+      .patch(`${url}/v1/product/${id}`, values)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v1-1-mongodb/product");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   let content;

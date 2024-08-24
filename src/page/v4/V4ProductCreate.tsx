@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Trash } from "lucide-react";
-import { FormEvent, useState, useTransition } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { url } from "@/lib/constants";
@@ -13,29 +13,29 @@ export default function V4ProductCreate() {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState<File | string>("");
   const [preview, setPreview] = useState("");
-  const [pending, startTransition] = useTransition();
+  const [pending, setPending] = useState(false);
 
   const navigate = useNavigate();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    startTransition(() => {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("price", price);
-      formData.append("image", image);
-      axios
-        .post(`${url}/v4/product`, formData)
-        .then((res) => {
-          toast.success(res.data.message);
-          navigate("/v4/product");
-        })
-        .catch((err) => {
-          if (err.response) {
-            toast.error(err.response.data.error);
-          } else toast.error(err.message);
-        });
-    });
+    setPending(true);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("image", image);
+    axios
+      .post(`${url}/v4/product`, formData)
+      .then((res) => {
+        toast.success(res.data.message);
+        navigate("/v4/product");
+      })
+      .catch((err) => {
+        if (err.response) {
+          toast.error(err.response.data.error);
+        } else toast.error(err.message);
+      })
+      .finally(() => setPending(false));
   };
 
   return (

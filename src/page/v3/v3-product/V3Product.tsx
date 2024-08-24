@@ -44,7 +44,7 @@ export default function V3Product() {
         <div className="flex gap-1">
           <QueryReset />
           <Button size={"sm"} asChild>
-            <Link to="/v3/product-create">Add New</Link>
+            <Link to="/v3-mongodb/product-create">Add New</Link>
           </Button>
         </div>
       </div>
