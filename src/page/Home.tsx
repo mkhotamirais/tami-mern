@@ -19,6 +19,7 @@ export default function Home() {
             version that only utilizes fundamental CRUD HTTP requests. Gradually, each subsequent version builds upon
             the previous one by adding features that enhance and expand its functionality."
         />
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className="rounded-full" size="lg">
