@@ -28,7 +28,7 @@ export function Projects({ className }: { className?: string }) {
 
   return (
     <div id="crud-versions" className={`${className} scroll-mt-16`}>
-      <h2 className="text-3xl font-bold text-center mb-4">CRUD VERSIONS</h2>
+      <h2 className="text-3xl font-bold text-center mb-4">MERN VERSIONS</h2>
       <Input
         value={cari}
         onChange={(e) => setCari(e.target.value)}

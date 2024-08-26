@@ -1,34 +1,23 @@
-import { Logo } from "./Header";
+import { projectsMenu } from "@/lib/projectsMenu";
+import { Logo, Socials } from "./Header";
 import { Container } from "./Wrapper";
-import { SiVite, SiNextdotjs, SiGithub, SiLinkedin } from "react-icons/si";
-import { FaUser } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
 
 export default function Footer() {
-  const footerLink = [
-    { href: "https://tamiweb.vercel.app/portfolio", icon: <FaUser />, title: "my portfolio" },
-    { href: "https://tamivite.vercel.app", icon: <SiVite />, title: "vite projects collection" },
-    { href: "https://tamiweb.vercel.app", icon: <SiNextdotjs />, title: "next projects collection" },
-    { href: "https://github.com/mkhotamirais", icon: <SiGithub />, title: "github account" },
-    { href: "https://www.linkedin.com/in/mkhotami-rais/", icon: <SiLinkedin />, title: "linkedin account" },
-  ];
   return (
-    <footer className="h-16">
+    <footer className="h-auto">
       <Container>
-        <div className="flex h-full items-center justify-between gap-2">
+        <div className="flex py-6 flex-col h-full items-center justify-center gap-4 border-t">
           <Logo />
-          <div className="flex gap-3 sm:gap-4">
-            {footerLink.map((item, i) => (
-              <a
-                key={i}
-                title={item.title}
-                rel="noopener noreferrer"
-                href={item.href}
-                className="inline-block hover:scale-125 transition"
-              >
-                {item.icon}
-              </a>
+          <div className="flex justify-center flex-wrap">
+            {projectsMenu.map((item, i) => (
+              <Button key={i} variant={"link"}>
+                <Link to={item.href}>{item.title}</Link>
+              </Button>
             ))}
           </div>
+          <Socials />
         </div>
       </Container>
     </footer>

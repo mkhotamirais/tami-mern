@@ -3,6 +3,7 @@ import { Container } from "./Wrapper";
 import { VersionsBtn } from "./VersionsBtn";
 import Navbar, { NavBtn } from "./Navbar";
 import AuthBtn from "./AuthBtn";
+import { FaEnvelope, FaGithub, FaLinkedin, FaUser } from "react-icons/fa6";
 
 export function Header() {
   return (
@@ -33,3 +34,22 @@ export function Logo() {
     </Link>
   );
 }
+
+export const Socials = () => {
+  return (
+    <div className="flex gap-4 sm:gap-5 items-center justify-center">
+      <a title="My Portfolio" href="https://tamiporto.vercel.app">
+        <FaUser className="size-5" />
+      </a>
+      <a title="Github account" href="https://github.com/mkhotamirais">
+        <FaGithub className="size-5" />
+      </a>
+      <a title="Linked account" href="https://www.linkedin.com/in/mkhotami-rais">
+        <FaLinkedin className="size-5" />
+      </a>
+      <a title="Send email" href="mailto:tami01.job@gmail.com">
+        <FaEnvelope className="size-5" />
+      </a>
+    </div>
+  );
+};
