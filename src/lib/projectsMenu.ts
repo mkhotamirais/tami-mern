@@ -9,7 +9,7 @@ export const projectsMenu = [
     title: "v1 Mongodb",
     href: "/v1-mongodb",
     description: `The first version only manages a single product model with basic items, and using zustand as a state management`,
-    tools: ["react", "tailwind", "shadcn", "typescript", "suztand", "mongodb", "mongoose"],
+    tools: ["react", "tailwind", "shadcn", "typescript", "zustand", "mongodb", "mongoose"],
   },
   {
     title: "v1-1 Mongodb",
