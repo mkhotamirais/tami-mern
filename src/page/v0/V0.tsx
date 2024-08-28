@@ -10,10 +10,10 @@ import { Link } from "react-router-dom";
 
 export default function V0() {
   const todoList = [
-    { href: "/v0/todo1", label: "todo1" },
-    { href: "/v0/todo3", label: "todo2" },
-    { href: "/v0/todo3", label: "todo3" },
-    { href: "/v0/todo4", label: "todo4" },
+    { href: "/v0-todo/todo1", label: "todo1" },
+    { href: "/v0-todo/todo3", label: "todo2" },
+    { href: "/v0-todo/todo3", label: "todo3" },
+    { href: "/v0-todo/todo4", label: "todo4" },
   ];
 
   return (
