@@ -10,9 +10,10 @@ import {
 import { LogIn, User } from "lucide-react";
 import useV2Me from "@/hooks/useV2Me";
 import axios from "axios";
-import { url } from "@/lib/constants";
+import { url, urlSequelize } from "@/lib/constants";
 import { toast } from "sonner";
 import useV3Me from "@/hooks/useV3Me";
+import useV2SequelizeMe from "@/hooks/useV2SequelizeMe";
 
 export default function AuthBtn() {
   const { pathname } = useLocation();
@@ -24,6 +25,8 @@ export default function AuthBtn() {
     content = <AuthV2Btn />;
   } else if (path1 === "v3-mongodb") {
     content = <AuthV3Btn />;
+  } else if (path1 === "v2-sequelize") {
+    content = <AuthV2SequelizeBtn />;
   } else {
     content = null;
   }
@@ -116,6 +119,57 @@ function AuthV3Btn() {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/v3-mongodb/register">Register</Link>
+        </DropdownMenuItem>
+      </>
+    );
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button className="" size={"sm"} variant={"link"}>
+          {me ? <User className="size-4" /> : <LogIn className="w-4 h-4" />}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">{content}</DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function AuthV2SequelizeBtn() {
+  const { me } = useV2SequelizeMe();
+
+  const onLogout = async () => {
+    await axios
+      .create({ withCredentials: true })
+      .patch(`${urlSequelize}/v2/signout`)
+      .then((res) => {
+        toast.success(res.data.message);
+        window.location.href = "/v2-sequelize/login";
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error || err.message);
+      });
+  };
+
+  let content;
+  if (me) {
+    content = (
+      <>
+        <DropdownMenuItem asChild>
+          <Link to="/v2-sequelize/me">Account</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
+      </>
+    );
+  } else {
+    content = (
+      <>
+        <DropdownMenuItem asChild>
+          <Link to="/v2-sequelize/login">Login</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to="/v2-sequelize/register">Register</Link>
         </DropdownMenuItem>
       </>
     );

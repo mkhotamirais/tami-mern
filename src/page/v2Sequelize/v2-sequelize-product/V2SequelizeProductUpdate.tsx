@@ -11,7 +11,7 @@ import { urlSequelize } from "@/lib/constants";
 import { useNavigate, useParams } from "react-router-dom";
 import { Err, LoaderBounce } from "@/components/Wrapper";
 import { useV2Sequelize } from "@/hooks/useV2Sequelize";
-import { ProductSchema } from "./v2SequelizeSchemas";
+import { ProductSchema } from "../v2SequelizeSchemas";
 
 type CreateProductForm = z.infer<typeof ProductSchema>;
 

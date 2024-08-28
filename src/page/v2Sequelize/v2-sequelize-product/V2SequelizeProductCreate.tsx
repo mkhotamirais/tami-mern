@@ -9,11 +9,13 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { urlSequelize } from "@/lib/constants";
 import { useNavigate } from "react-router-dom";
-import { ProductSchema } from "./v2SequelizeSchemas";
+import { ProductSchema } from "../v2SequelizeSchemas";
+import { useV2Sequelize } from "@/hooks/useV2Sequelize";
 
 type CreateProductForm = z.infer<typeof ProductSchema>;
 
 export default function V2SequelizeProductCreate() {
+  const { accessToken } = useV2Sequelize();
   const [pending, setPending] = useState(false);
   const form = useForm<CreateProductForm>({
     resolver: zodResolver(ProductSchema),
@@ -24,10 +26,11 @@ export default function V2SequelizeProductCreate() {
   const onSubmit = async (values: CreateProductForm) => {
     setPending(true);
     axios
-      .post(`${urlSequelize}/v1/product`, values)
+      .create({ withCredentials: true })
+      .post(`${urlSequelize}/v2/product`, values, { headers: { Authorization: `Bearer ${accessToken}` } })
       .then((res) => {
         toast.success(res.data.message);
-        navigate("/v1-sequelize/product");
+        navigate("/v2-sequelize/product");
       })
       .catch((err) => {
         if (err.response) {

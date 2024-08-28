@@ -12,8 +12,6 @@ export default function V1SequelizeProduct() {
     getData();
   }, [getData]);
 
-  console.log(data);
-
   let content;
   if (loadData) {
     content = <LoaderBounce />;

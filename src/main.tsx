@@ -76,6 +76,10 @@ import V2Sequelize from "./page/v2Sequelize/V2Sequelize.tsx";
 import V2SequelizeProduct from "./page/v2Sequelize/v2-sequelize-product/V2SequelizeProduct.tsx";
 import V2SequelizeProductCreate from "./page/v2Sequelize/v2-sequelize-product/V2SequelizeProductCreate.tsx";
 import V2SequelizeProductUpdate from "./page/v2Sequelize/v2-sequelize-product/V2SequelizeProductUpdate.tsx";
+import V2SequelizeLogin from "./page/v2Sequelize/v2-sequelize-auth/V2SequelizeLogin.tsx";
+import V2SequelizeRegister from "./page/v2Sequelize/v2-sequelize-auth/V3SequelizeRegister.tsx";
+import { V2SequelizeIsLogin } from "./page/v2Sequelize/V2SequelizeProtected.tsx";
+import V2SequelizeMe from "./page/v2Sequelize/v2-sequelize-me/V2SequelizeMe.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -179,6 +183,11 @@ const router = createBrowserRouter(
         <Route path="product" element={<V2SequelizeProduct />} />
         <Route path="product-create" element={<V2SequelizeProductCreate />} />
         <Route path="product-update/:id" element={<V2SequelizeProductUpdate />} />
+        <Route path="me" element={<V2SequelizeMe />} />
+        <Route element={<V2SequelizeIsLogin />}>
+          <Route path="login" element={<V2SequelizeLogin />} />
+          <Route path="register" element={<V2SequelizeRegister />} />
+        </Route>
       </Route>
     </Route>
   )
