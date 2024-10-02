@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { UpdateUserSchema } from "../v2Schemas";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -14,6 +13,7 @@ import { Err, LoaderBounce } from "@/components/Wrapper";
 import axios from "axios";
 import { url } from "@/lib/constants";
 import { toast } from "sonner";
+import { UpdateUserSchema } from "../v2SequelizeSchemas";
 
 type UpdateUserForm = z.infer<typeof UpdateUserSchema>;
 
