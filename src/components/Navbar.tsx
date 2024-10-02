@@ -114,7 +114,7 @@ export default function Navbar({ className }: { className?: string }) {
     <nav
       className={`${className} ml-0 sm:ml-6 ${
         navBtn ? "scale-y-100" : "scale-y-0"
-      } sm:scale-y-100 origin-top transition text-[0.9rem] fixed sm:static top-16 bg-inherit inset-x-0 p-3 sm:p-0 border-b rounded-b sm:border-none`}
+      } sm:scale-y-100 origin-top transition text-[0.9rem] fixed sm:static top-16 bg-background sm:bg-inherit inset-x-0 p-3 sm:p-0 border-b rounded-b sm:border-none`}
     >
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
         {nav.map((item, i) => (
@@ -123,10 +123,8 @@ export default function Navbar({ className }: { className?: string }) {
             key={i}
             to={item.href}
             className={`${
-              path2?.toLowerCase().includes(item.label?.toLowerCase())
-                ? "text-gray-900 font-[500]"
-                : "text-muted-foreground"
-            } capitalize hover:text-gray-800 p-2 sm:p-0 hover:bg-muted sm:hover:bg-inherit rounded transition`}
+              path2?.toLowerCase().includes(item.label?.toLowerCase()) ? "" : "text-muted-foreground"
+            } capitalize p-2 sm:p-0 hover:bg-muted sm:hover:bg-inherit rounded transition`}
           >
             {item.label}
           </Link>

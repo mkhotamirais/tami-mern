@@ -4,10 +4,11 @@ import { VersionsBtn } from "./VersionsBtn";
 import Navbar, { NavBtn } from "./Navbar";
 import AuthBtn from "./AuthBtn";
 import { FaEnvelope, FaGithub, FaLinkedin, FaUser } from "react-icons/fa6";
+import { ModeToggle } from "./theme/ModeToggle";
 
 export function Header() {
   return (
-    <header className="z-50 sticky top-0 backdrop-blur bg-white/70 h-16">
+    <header className="z-50 sticky top-0 backdrop-blur bg-background h-16">
       <Container>
         <div className="h-full flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -16,6 +17,7 @@ export function Header() {
             <Navbar />
           </div>
           <div className="flex space-x-2 items-center">
+            <ModeToggle />
             <AuthBtn />
             <VersionsBtn className="hidden sm:flex" />
             <NavBtn />

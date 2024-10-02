@@ -2,9 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
-
 import Home from "./page/Home.tsx";
 import V1 from "./page/v1/V1.tsx";
 import V2 from "./page/v2/V2.tsx";
@@ -80,6 +78,7 @@ import V2SequelizeLogin from "./page/v2Sequelize/v2-sequelize-auth/V2SequelizeLo
 import V2SequelizeRegister from "./page/v2Sequelize/v2-sequelize-auth/V3SequelizeRegister.tsx";
 import { V2SequelizeIsLogin } from "./page/v2Sequelize/V2SequelizeProtected.tsx";
 import V2SequelizeMe from "./page/v2Sequelize/v2-sequelize-me/V2SequelizeMe.tsx";
+import { ThemeProvider } from "./components/theme/ThemeProvider.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -195,6 +194,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>
 );
